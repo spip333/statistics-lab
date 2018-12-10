@@ -1,0 +1,49 @@
+---
+title: "Uebungserie-3-stern_nicolas"
+author: "Nicolas Stern"
+date: "7 novembre 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+load("Daten_WachstumX.RData")
+```
+
+## Aufgabe: zweidimensionale Häuﬁgkeitsverteilung
+- Bestimmen Sie die zweidimensionale Häuﬁgkeitsverteilung der Merkmale Geschlecht und Motiv aus dem Datenframe Daten_WachstumX
+
+```{r}
+table.gender.motiv <- table(Daten_Wachstum$Geschlecht,Daten_Wachstum$Motiv)
+table.gender.motiv
+```
+
+## Aufgabe: Randverteilungen
+- Fügen Sie die Randverteilungen zur zweidimensionalen Häuﬁgkeitsverteilung der Merkmale Geschlecht und Motiv hinzu.
+addmargins(table.gender.motiv)
+````{r}
+tab <- table(Daten_Wachstum$Geschlecht, Daten_Wachstum$Motiv)
+addmargins(tab)
+```
+
+## Aufgabe: Relative Zweidimensionale Verteilung
+- Bestimmen Sie die relative zweidimensionale Häuﬁgkeitsverteilung der Merkmale Geschlecht und Motiv.
+````{r}
+prop.table(table.gender.motiv)
+addmargins(prop.table(table.gender.motiv))
+```
+
+## Aufgabe: Bedingte Verteilung 1
+- Wie verteilen sich die verschiedenen Motive innerhalb der Geschlechtergruppen
+```{r}
+round(prop.table(table.gender.motiv, margin=2),2)
+```
+
+## Aufgabe: Bedingte Verteilung 2
+- Aufgabe: Wie verteilen sich die beiden Geschlechter auf die verschiedenen Motive?
+```{r}
+round(prop.table(table.gender.motiv, margin=1),2)
+```
+

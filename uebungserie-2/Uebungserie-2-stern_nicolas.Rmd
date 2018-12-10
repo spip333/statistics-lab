@@ -1,0 +1,119 @@
+---
+title: "Uebungserie2"
+author: "Nicolas Stern"
+date: "6 novembre 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Übung1 : Häuﬁgkeitsverteilung der Wartezeiten aus faithful.
+```{r}
+table(faithful$waiting)
+```
+
+
+## Übung 2 : Welches Intervall der Eruptionsdauer enthält die meisten Eruptionen?
+```{r}
+# Schritt 1 : Konvertieren die Häufigkeitstabelle in einer DataFrame um auf den einzelnen Werten zugreifen zu können
+freq.df <- data.frame(table(faithful$waiting))
+# Schritt 2 : Lese die Spaltennamen aus
+colnames(freq.df)
+# Schritt 3 : Bestimme den Maximal des Auftretens der Einzelwerten
+max.anz <- max(freq.df$Freq)
+# Schritt 4: Aus der Dataframe der Häufigkeiten, wähle die Werte in der Spalte "Var1" aus, die den Wert aus Schritt 2 haben:
+intervall.mit.meistens.eruptionen <- freq.df[freq.df$Freq == max.anz, c("Var1")]
+# Schritt 5: Der Wert, der gesucht wird, ist die Anzahl der Auftritte aus Schritt 4
+intervall.mit.meistens.eruptionen
+```
+
+## Übung 3 : Bestimmen Sie die Häuﬁgkeitsverteilung der Eruptionszeiten aus faithful mit der Funktion hist.
+```{r}
+min <- min(faithful$eruptions)
+max <- max(faithful$eruptions)
+breaks <- seq(min, max, by=0.1)
+hist(faithful$eruptions, breaks = breaks, plot = FALSE)$counts
+```
+
+## Aufgabe: Histogramm
+### Problem: Zeichnen Sie das Histogramm der Wartezeiten aus faithful
+
+```{r}
+hist(faithful$waiting, 
+     xlab = "Wartezeit in Minuten", 
+     ylab="Häufigkeit", 
+     main="Wie häufig wartet man wie Lange auf einer Eruption des Old Faithful?")
+```
+
+## Aufgabe: Relative Häuﬁgkeitsverteilung stetiger Daten
+### Problem: Bestimmen Sie die relative Häuﬁgkeitsverteilung der Wartezeiten aus faithful.
+```{r}
+waiting.time.table <- table(faithful$waiting)
+sum.events <- sum(waiting.time.table)
+waiting.time.relfreq <-  round(waiting.time.table/sum.events, 2)
+waiting.time.relfreq
+```
+
+## Aufgabe: Kumulierte Häuﬁgkeitsverteilung
+### Problem: Bestimmen Sie die kumulierte Häuﬁgkeitsverteilung der Wartezeiten aus faithful.
+```{r}
+# Schritt 1 : nehme die Werte der Wartezeiten in einem Vektor
+waiting <- faithful$waiting
+# Schritt 2 : bestimme min und max Wartezeiten, und die Intervallen
+min.waiting <- min(waiting)
+max.waiting <- max(waiting)
+breaks <- seq(min.waiting, max.waiting + 1, by=1)
+# Schritt 3 :  bestimme die Faktoren mit der Funktion cut. 
+waiting.cut <- cut(waiting, breaks, right=FALSE) 
+# Schritt 3 : Bestimme die kumulierte Häufigkeitsverteilung mit cumsum
+waiting.freq <- table(waiting.cut)
+waiting.cumfreq <- cumsum(waiting.freq)
+# ... und Ausgabe
+cbind(waiting.cumfreq)
+```
+## Aufgabe: Kumulierte Häuﬁgkeitsverteilungskurve
+### Problem: Bestimmen Sie die kumulierte Häuﬁgkeitsverteilungskurve der Wartezeiten aus faithful.
+```{r}
+breaks <- seq(43,96, by=1)
+plot(breaks, 
+     waiting.cumfreq, 
+     type="l", 
+     main="Wartezeiten des Old Faithful Eruptions", 
+     xlab="Wartezeit (Minuten)",
+     ylab="Kumulative Häufigkeit") 
+```
+## Aufgabe: Kumulierte relative Häuﬁgkeitsverteilung
+### Problem: Bestimmen Sie die kumulierte relative Häuﬁgkeitsverteilung der Wartezeiten aus faithful
+```{r}
+waiting.cumrelfreq = cumsum(waiting.freq / sum(waiting.freq))
+waiting.cumrelfreq 
+```
+
+## Aufgabe: Kumulierte relative Häuﬁgkeitskurve
+### Problem: Bestimmen Sie die kumulierte relative Häuﬁgkeitsverteilungskurve der Wartezeiten aus faithful.
+```{r}
+plot(breaks, 
+     waiting.cumrelfreq, 
+     type="l", 
+     main="kumulierte relative Häufigkeit der Wartezeiten des Old Faithful", 
+     xlab="Wartezeit (Minuten)",
+     ylab="Kumulierte relative Häufigkeit") 
+```
+
+## Aufgabe: Histogramm
+### Problem: Die Datei „Daten_Wachstum.RData“ enthält die Ergebniss einer Umfrage unter 100 Jungunternehmern. 
+- Erstellen Sie ein Histogramm, das die Altersverteilung in der Stichprobe darstellt. 
+- Die Klassenbreiten sollen 3 Jahre betragen, das erste Intervall soll bei 15 Jahren beginnen und die rechte Intervallgrenze soll nicht zum Intervall gehören
+```{r load Daten_WachstumX, include=TRUE}
+
+load("Daten_WachstumX.RData")
+max.alter <- max(Daten_Wachstum$Alter)
+breaks <- seq(15, max.alter, by=3)
+hist(Daten_Wachstum$Alter, breaks, 
+     include.lowest = TRUE, 
+     main="Histogramm der Altersverteilung aus Daten_Wachstum", 
+     xlab = "Alter (in Jahren)",
+     ylab = "Anzahl Personen")
+```

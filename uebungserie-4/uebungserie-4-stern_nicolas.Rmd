@@ -1,0 +1,95 @@
+---
+title: "Uebungserie4-stern_nicolas"
+author: "Nicolas Stern"
+date: "10 novembre 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Datenvorbereitung
+```{r}
+wait.time <- faithful$waiting
+```
+
+
+## Aufgabe: arithmetischer Mittelwert
+- Bestimmen Sie die durchschnittliche Wartezeit zwischen den Eruptionen aus faithful.
+```{r}
+mean(wait.time)
+```
+
+## Aufgabe: Median
+- Bestimmen Sie den Median der Wartezeiten zwischen den Eruptionen aus faithful.
+```{r}
+median(wait.time)
+```
+
+
+## Aufgabe: Quartile
+- Bestimmen Sie die Quartile der Wartezeiten aus faithful
+```{r}
+quantile(wait.time)
+```
+
+## Aufgabe: Quantile
+- Bestimmen Sie das 0.17-Quantil, das 43%-Quantil, das 67%-Quantil und das 0.85-Quantil der Wartezeiten aus faithful.
+```{r}
+quantile(wait.time, probs = 0.17)
+quantile(wait.time, probs = 0.43)
+quantile(wait.time, probs = 0.67)
+quantile(wait.time, probs = 0.85)
+```
+
+## Aufgabe: Spannweite
+- Bestimmen Sie die Spannweite der Wartezeiten aus faithful
+```{r}
+range(wait.time)
+```
+
+## Aufgabe: Interquartilsabstand
+- Bestimmen Sie den Interquartilsabstand der Wartezeiten aus faithful.
+```{r}
+IQR(wait.time)
+```
+
+## Aufgabe: Boxplot
+- Bestimmen Sie den Boxplot der Wartezeiten aus faithful
+```{r}
+boxplot(wait.time, main="Wartezeite der Eruptionen des Old Faithful",
+        ylab = "Wartezeite in Minuten")
+```
+
+## Aufgabe: Varianz
+# Problem: Bestimmen Sie die beiden Varianzen der Wartezeiten aus faithful.
+```{r}
+print(paste("Stichprobenvarianz: ",round(var(wait.time),2)))
+print(paste("Populationsvarianz: ",round(var(wait.time) * (length(wait.time)-1)/ length(wait.time),2)))
+```
+
+## Aufgabe: Standardabweichung
+- Bestimmen Sie die beiden Standardabweichungen der Wartezeiten aus faithful.
+```{r}
+print(paste("Stichprobenstandardabweichung: ",round(sd(wait.time),2)))
+print(paste("Populationsstandardabweichung: ",round(sqrt(var(wait.time) * (length(wait.time)-1)/ length(wait.time)),2)))
+```
+
+## Aufgabe: Korrelationskoefﬁzient
+- Öffnen Sie den Datensatz swiss. Bestimmen Sie die Korrelation zwischen der Fruchtbarkeitsrate und dem Anteil derjenigen, deren Ausbildung über den Primarschulabschluss hinausgeht
+```{r}
+fertility <- swiss$Fertility
+edu.above.prim <- swiss$Education
+plot(edu.above.prim, fertility, main = "Fruchtbarkeit gegenüber Ausbildung in 47 Gemeinden in CH (1888)",
+     xlab="Anteil der Bevölkerung mit Ausbildung höher als Primarschule",
+     ylab = "Fruchtbarkeit")
+corr <- cor(edu.above.prim, fertility)
+print(paste("Korrelationskoefﬁzient zwischen Fruchtbarkeit und Ausbildung: ",round(corr,2)))
+
+```
+
+
+
+
+
+

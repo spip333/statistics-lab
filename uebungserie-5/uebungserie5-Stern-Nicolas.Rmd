@@ -1,0 +1,107 @@
+---
+title: "Uebungserie 5"
+author: "Nicolas Stern"
+date: "17 novembre 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Aufgabe: Zusammenhang nominaler Merkmale
+- Problem: Berechnen Sie ein geeignetes Mass für den Zusammenhang zwischen diesen beiden Merkmalen und interpretieren Sie Ihr Ergebnis.
+
+#### 1. Geeignete Struktur (Matrix) mit den Daten populieren
+```{r}
+absatz <- matrix(c(19,27,4,7,8,5,1,13,16), nrow=3, byrow = T)
+rownames(absatz) <- c("A", "B", "C")
+colnames(absatz) <- c("stark", "mittel", "schwach")
+addmargins(absatz)
+```
+Um zu feststellen, ob eine Korrelation überhaupt besteht, vergleichen wir die beobachtete Häufigkeiten mit den erwarteten Häufigkeiten.
+
+#### 2. Berechnung der erwarteten Häufigkeiten
+
+Zu diesem Zweck populiere ich eine neue Matrix mit einer Schleife.
+```{r}
+absatz.erwartet <- matrix(rep(0, 9),nrow=3, byrow = T)
+for (i in 1:3){
+  for (j in 1:3){
+    absatz.erwartet[i,j] <- (sum(absatz[i,]) * sum(absatz[,j])) / sum(absatz)
+  }
+}
+absatz.erwartet
+addmargins(absatz.erwartet)
+```
+Es besteht ein Unterschied zwischen erwarteten und beobachteten Werten. 
+
+Daraus macht es Sinn, die Korrelation mit Chiquadrat und Cramer V zu bestimmen.
+
+#### 3. Bestimmung der Chiquadrat:
+```{r}
+my.chi.quadrat <- chisq.test(absatz)$statistic
+cat("Chiquadrat berechnet für die Bestimmung der Zusammenhang zwischen Werbekampagne und Absatzwachstum:", "\n ", round(my.chi.quadrat,2))
+```
+Kontrolle: der Chiquadrat für die erwarteten Auftreten muss null (zero) sein:
+```{r}
+my.chi.quadrat.erwartete.haufig <- chisq.test(absatz.erwartet)$statistic
+cat("Chiquadrat der erwarteten Häufigkeiten (muss null sein):", "\n ", round(my.chi.quadrat.erwartete.haufig,2))
+```
+
+#### 3. Bestimmung des Cramer V:
+```{r}
+my.cramer.v <- sqrt(chisq.test(absatz)$statistic / (sum(absatz)*(min(dim(absatz))-1)))
+cat(paste("Cramer V berechnet für die Bestimmung der Zusammenhang zwischen Werbekampagne und Absatzwachstum: " ,"\n", round(my.cramer.v,2)))
+```
+#### 4. Schlussfolgerung
+```{r, echo=FALSE}
+cat("Der Wert von ", round(my.cramer.v,2), " weist auf einer mittleren Korrelation zwischen Werbekampagne und  Absatzkampagne darauf hin.")
+```
+
+## Statistischer Zusammenhang: Metrische Merkmale
+- Problem: Laden Sie den Data Frame StorchBabies aus der Datei StorchBabies.RData. Die Tabelle zeigt neben der Anzahl der Storchenpaare auch die Geburtenrate (in 1000 Geburten pro Jahr) in 17 europäischen Ländern. Bestimmen Sie mit einer passenden Kennzahl den Zusammenhang zwischen den Merkmalen Storchenpaare und Geburtenrate
+
+#### 1. Daten laden, Daten Plotten
+```{r}
+load("../StorchBabies.RData")
+summary(StorchBabies)
+storch <- StorchBabies$Storchenpaare
+geb <- StorchBabies$Geburtenrate
+plot(storch, geb, main="Geburtenrate als Funktion der Anzahl Storchen \n in 17 europäischen Ländern", xlab = "Anzahl Storchenpaaren im Land", ylab = "Geburtenrate")
+abline(lm(geb~storch))
+```
+
+#### 2. Korrelationskoeffizient bestimmen
+
+```{r}
+corcoeff <- cor(storch, geb)
+```
+```{r echo=FALSE}
+cat("Korrelationskoeffizient zwischen Storchenpopulation und Geburtenrate : ", round(corcoeff, 2), ". Das weist auf einere mittleren bis starken statistischen Korrelation zwischen der Storchenpopulation und der Geburtenrate darauf hin.")
+```
+
+## Statistischer Zusammenhang: Ordinale Merkmale
+- Problem: Auf einer Whiskydegustation wurden verschiedene Whiskysorten sowohl von einem professionellen Tasting-Master als auch von einem privaten Whiskyfreund begutachtet. Beide konnten pro Whisky Punkte zwischen 0 („furchtbar schlecht“) und 12 („fantastisch“) vergeben. Berechnen Sie eine passende Kennzahl des Zusammenhangs und interpretieren Sie diese.
+
+Zuesrst bringen wir die Daten in einer geeigneter Struktu und zeichne einen Grafik.
+```{r}
+rating.master <- c(9,1,10,6,5,8)
+rating.friend <- c(7,5,12,10,8,3)
+```
+```{r echo=FALSE}
+plot(rating.friend, rating.master,
+     main="Vergleich der Ratings von Whisky \n zwischen einem Tasting-Master und einem Amateur ",
+     xlab = "Noten vom Whisky-Freund",
+     ylab = "Noten vom Tasting-Master")
+```
+Aus dem Plot, sieht es so aus, dass die Korrelation zwischen den Punkten des Masters und des Whiskyfreundes nicht sehr stark ist, aber die besteht immerhin. Im Idealfall (Tasting-Master und Whiskyfreund geben identische Noten), würden die Punkte auf einer Gerade liegen, wobei zu jeder Note auf der X-Achse eine identische Punktzahl auf der Y-Achse zugeordnet wäre.
+
+Die Korrelation lässt sich wie folgt berechnen:
+```{r}
+corr <- cor(rating.master, rating.friend, method="spearman")
+```
+```{r echo=FALSE}
+cat("Eine Korrelation von " , round(corr, 2), "weist auf einer mittleren Korrelation.")
+```
+D.h. der Whiskey-Freund bewertet nicht genau wie einen Tasting Master, aber auch nicht völlig zufällig.
+
