@@ -9,8 +9,14 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 # Stetige Gleichverteilung
+Aufgabe: Sie haben um 9 Uhr ein wichtiges Meeting, aber Sie verschlafen und wachen erst um 8:30 Uhr auf. Um 8:40 rennen Sie aus der Tür, auf dem Weg ins Büro. Sie brauchen 6 Minuten zur Bushaltestelle. Sie warten auf den Bus, der morgens alle fünf Minuten kommt, die Wartezeit in Minuten ist gleichverteilt zwischen 0 und 5. Der Bus braucht zwischen 10 bis 15 Minuten (gleichverteilt) bis ins Büro. Modellieren Sie Ihre Reisezeit mit einer einzigen Variablen X. 
 
-# TODO : Gleichverteilung
+- Welche Verteilung hat die Zufallsvariable X, welche die gesamte Pendelzeit von Haustür bis ins Büro beschreibt?
+
+- Mit welcher Wahrscheinlichkeit schaffen Sie es noch rechtzeitig ins Büro?
+
+
+# TODO : Stetige Gleichverteilung
 
 # Exponentialverteilung
 In einer vierwöchigen Datenerhebung missen Sie die Länge der Telefongespräche,die Sie auf Ihrem Handy führen. Sie finden heraus, dass die Dauer der Gespräche (in Minuten) einer Exponentialverteilung folgt, und Ihre Gespräche im Erwartungswert 3 Minuten lang sind 
@@ -22,9 +28,14 @@ In einer vierwöchigen Datenerhebung missen Sie die Länge der Telefongespräche
 - Antwort: Die Verteilung ist mit folgender Funktion beschrieben: $\lambda * e^{-\lambda*x}$
 
 Graphische Darstellung, mit Einsetzer der Werten $\lambda$ = 1/3 (Rate pro Minute eines Gespräches, also 3 Minuten per Gespräch, d.h. 1/3 per Minute).
+
+# TODO FIX PLOT
 ```{r}
 xvalues <- seq(0, 10, length=11)
-plot(xvalues, dexp(xvalues, rate=1/3), type = "l", ylab = "Verteilung", xlab = "Dauer eines Gesprächs (In Minuten)", main= "Verteilung der Dauer der Gespräche")
+plot(xvalues, dexp(xvalues, rate=1/3), type = "l", 
+     ylab = "Verteilung", 
+     xlab = "Dauer eines Gesprächs (In Minuten)", 
+     main= "Verteilung der Dauer der Gespräche")
 ```
 
 2. Das Telefon klingelt. Wie gross ist die Wahrscheinlichkeit, dass dieses Gespräch höchstens eine Minute dauert?
@@ -40,7 +51,7 @@ D.h., die Wahrscheinlichkeit beträgt ca. 28 %, dass ein Gespräch höchstens ei
 
 - Antwort : Die Wahrscheinlichkeit ist durch die Fläche unter der Funktionskurve gegeben. Da die Fläche 1 beträgt, kann man die Wahrscheinlichkeit wie folgt berechnen:
 ```{r}
-1 - round(pexp(1, rate=1/3), 2)
+p.phone.less.1 <- 1 - round(pexp(1, rate=1/3), 2)
 ```
 
 D.h., die Wahrscheinlichkeit beträgt ca. 72 %, dass ein Gespräch mindestens eine Minute dauert.
@@ -57,15 +68,15 @@ D.h., die Wahrscheinlichkeit beträgt ca. 35 %, dass ein Gespräch zwischen eine
 
 4. Berechnen und interpretieren Sie das 25%-Quantil dieser Verteilung.
 
-- Antwort : 25% quantile 
-
-# TODO : Interpretation
+- Antwort :
 
 ```{r}
 xvalues <- seq(0, 10, length=11)
 prob <- dexp(xvalues, rate=1/3)
 quantile (prob, probs=0.25 )
 ```
+
+- Interpretation
 
 # Normalverteilung
 
@@ -76,27 +87,34 @@ In einer Fabrik werden Tüten mit Kartoffelchips befüllt. Das durchschnittliche
 Mit welcher Wahrscheinlichkeit werden Tüten abgefüllt, deren Gewicht 
 
 1. um weniger als 2 g vom Mittelwert abweicht?
-- Equivalent zu "zwischen 198 und 202g"
+
+- Lösungsweg: Die Wahrscheinlichkeit wird mit der Fläche unter der Kurve gegeben, und wird mit der R-Funktion pnorm berechnet. Um die Wahrscheinlichkeit der Tüten zu berechnen, weniger als 202 g zu betragen, berechnet man die Fläche mit x = 202 und lower.tail = TRUE. die Wahrscheinlichkeit, dass eine Tüte mehr als 198 g zu betragen, wird mit dem Parameter lower.tail = FALSE berechnet. Die Antwort ergibt sich als die Differenz zwischen beiden Flächen. 
 ```{r}
-pnorm(q = 202, mean = 200, sd = 4, lower.tail = T) - pnorm(q = 198, mean = 200, sd = 4, lower.tail = T)
+p.between.198.202 <- pnorm(q = 202, mean = 200, sd = 4, lower.tail = T) - pnorm(q = 198, mean = 200, sd = 4, lower.tail = T)
 ```
-# TODO : Interpretation
+```{r echo =FALSE}
+paste ("Wahrscheinlichkeit, dass der Gewicht einer Tüte zwischen 198 und 202 g beträgt:" , round(p.between.198.202 , 2));
+```
 
 
 2. über 205 g liegt?
 ```{r}
-pnorm(q = 205, mean = 200, sd = 4, lower.tail = F)
+p.over.205 <- pnorm(q = 205, mean = 200, sd = 4, lower.tail = F)
 ```
-
-# TODO : Interpretation
-
+```{r echo =FALSE}
+paste ("Wahrscheinlichkeit, dass der Gewicht einer Tüte ueber 205 g beträgt:" , round(p.over.205 , 2));
+```
 
 3. Welches Gewicht wird von 95% der Tüten überschritten?
+
+- Lösungsweg : Wert auf der x-Achse wird über die R-Funktion qnorm berechnet.
 ```{r}
-qnorm(p=0.95, mean = 200, sd = 4, lower.tail = F)
+weight.95.percent <- qnorm(p=0.95, mean = 200, sd = 4, lower.tail = F)
 ```
 
-# TODO : Interpretation
+```{r echo =FALSE}
+paste ("Gewicht, das von 95% der Tüten überschritten wird : " , round(weight.95.percent, 2));
+```
 
 # $\chi^2$ -Verteilung
 ### Aufgabe: 
@@ -140,4 +158,13 @@ paste ("Schiefe der Wartezeite aus Faithful: ", round(sk,2));
 # Kurtosis
 ### Aufgabe: 
 - Bestimmen Sie die Kurtosis der Wartezeiten von Faithful.
-- Lösungsweg : 
+- Lösungsweg : Bestimmung der Kurtosis mit R-Funktion kurtosis 
+
+```{r}
+kur <- kurtosis(wait)
+```
+```{r echo =FALSE}
+paste ("Kurtosis der Wartezeite aus Faithful: ", round(kur,2));
+```
+- Interpretation: negative Kurtosis : Die Faithful Wartezeite haben  weniger Aussreiser als eine Normalverteilung. 
+

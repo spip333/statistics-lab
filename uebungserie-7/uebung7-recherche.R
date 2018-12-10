@@ -51,11 +51,13 @@ quantile (prob, probs=0.25 )
 # - über 205 g liegt?
 # - Welches Gewicht wird von 95% der Tüten überschritten?
 plot(dnorm(190:210, mean=200, sd=4), type="l")
+
 pnorm(204, mean=200, sd=4, lower.tail=T) - pnorm(196, mean=200, sd=4, lower.tail=T)
 
 
-?dnorm
+pnorm( 198.3, mean = 200, lower.tail = T)
 
+?qnorm
 
 ###########################################################
 # Normalverteilung Beispiel	
@@ -176,3 +178,8 @@ x <- 1:length(wait)
 plot(x, y, type="l")
 frequency(wait)
 ?frequency
+
+# KUrtosis
+library(e1071)
+duration <- faithful$eruptions
+kurtosis(duration)
