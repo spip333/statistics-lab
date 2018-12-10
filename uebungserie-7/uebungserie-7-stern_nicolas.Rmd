@@ -1,0 +1,143 @@
+---
+title: "Uebungserie_7_stern_nicolas"
+author: "Nicolas Stern"
+date: "6 décembre 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Stetige Gleichverteilung
+
+# TODO : Gleichverteilung
+
+# Exponentialverteilung
+In einer vierwöchigen Datenerhebung missen Sie die Länge der Telefongespräche,die Sie auf Ihrem Handy führen. Sie finden heraus, dass die Dauer der Gespräche (in Minuten) einer Exponentialverteilung folgt, und Ihre Gespräche im Erwartungswert 3 Minuten lang sind 
+
+### Aufgabe: 
+
+1. Welche Verteilung hat die Zufallsvariable X, welche die Dauer der Telefongespräche in Minuten beschreibt?
+
+- Antwort: Die Verteilung ist mit folgender Funktion beschrieben: $\lambda * e^{-\lambda*x}$
+
+Graphische Darstellung, mit Einsetzer der Werten $\lambda$ = 1/3 (Rate pro Minute eines Gespräches, also 3 Minuten per Gespräch, d.h. 1/3 per Minute).
+```{r}
+xvalues <- seq(0, 10, length=11)
+plot(xvalues, dexp(xvalues, rate=1/3), type = "l", ylab = "Verteilung", xlab = "Dauer eines Gesprächs (In Minuten)", main= "Verteilung der Dauer der Gespräche")
+```
+
+2. Das Telefon klingelt. Wie gross ist die Wahrscheinlichkeit, dass dieses Gespräch höchstens eine Minute dauert?
+
+- Antwort: Die Wahrscheinlichkeit ist durch die kumulierte Verteilung gegeben. 
+
+```{r}
+round(pexp(1, rate=1/3), 2)
+```
+D.h., die Wahrscheinlichkeit beträgt ca. 28 %, dass ein Gespräch höchstens eine Minute dauert.
+
+3. Wie gross ist die Wahrscheinlichkeit, dass das Gespräch länger als eine Minute dauert?
+
+- Antwort : Die Wahrscheinlichkeit ist durch die Fläche unter der Funktionskurve gegeben. Da die Fläche 1 beträgt, kann man die Wahrscheinlichkeit wie folgt berechnen:
+```{r}
+1 - round(pexp(1, rate=1/3), 2)
+```
+
+D.h., die Wahrscheinlichkeit beträgt ca. 72 %, dass ein Gespräch mindestens eine Minute dauert.
+
+3. Mit welcher Wahrscheinlichkeit dauert das Gespräch zwischen einer und drei Minuten?
+
+- Antwort : diese Wahrscheinlichkeit ist wieder durch die Fläche unter der Funktionskurve gegeben: Da die Fläche 1 beträgt, kann man die kumulierte Wahrscheinlichkeit für 1 Minute-Gespräch von der kumulierten Wahrscheinlichkeit für 3 Minuten-Gespräch substrahieren:
+
+```{r}
+round(pexp(3, rate=1/3) - pexp(1, rate=1/3),2)
+```
+D.h., die Wahrscheinlichkeit beträgt ca. 35 %, dass ein Gespräch zwischen eine und 3 Minuten  dauert.
+
+
+4. Berechnen und interpretieren Sie das 25%-Quantil dieser Verteilung.
+
+- Antwort : 25% quantile 
+
+# TODO : Interpretation
+
+```{r}
+xvalues <- seq(0, 10, length=11)
+prob <- dexp(xvalues, rate=1/3)
+quantile (prob, probs=0.25 )
+```
+
+# Normalverteilung
+
+## Aufgabe :
+
+In einer Fabrik werden Tüten mit Kartoffelchips befüllt. Das durchschnittlicheGewicht der Tüten soll nach den Angaben des Werkes 200 g betragen. Da die Tüten  maschinell befüllt werden, wird dieser Wert nur mit einer Standardabweichung von 4 g eingehalten. 
+
+Mit welcher Wahrscheinlichkeit werden Tüten abgefüllt, deren Gewicht 
+
+1. um weniger als 2 g vom Mittelwert abweicht?
+- Equivalent zu "zwischen 198 und 202g"
+```{r}
+pnorm(q = 202, mean = 200, sd = 4, lower.tail = T) - pnorm(q = 198, mean = 200, sd = 4, lower.tail = T)
+```
+# TODO : Interpretation
+
+
+2. über 205 g liegt?
+```{r}
+pnorm(q = 205, mean = 200, sd = 4, lower.tail = F)
+```
+
+# TODO : Interpretation
+
+
+3. Welches Gewicht wird von 95% der Tüten überschritten?
+```{r}
+qnorm(p=0.95, mean = 200, sd = 4, lower.tail = F)
+```
+
+# TODO : Interpretation
+
+# $\chi^2$ -Verteilung
+### Aufgabe: 
+- Mit welcher Wahrscheinlichkeit liegt der Wert einer $\chi^2$ - Verteilung mit df = 11 über 15?
+- Lösungsweg: Wahrscheinlichkeit p wird mit R-Funktion pchisq(x, df) berechnet. Wahrscheinlichkeit, dass der Wert über ein Referenzwert liegt, wird mit 1 - pchisq(x, df) berechnet.
+
+```{r}
+p.above.15 <- 1-pchisq(15, df=11)
+```
+```{r echo = FALSE}
+paste ("Wahrscheinlichkeit, dass der Wert der Chi-quadrat-Verteilung bei 11 Freiheitsgrade über 15 liegt:" , round(p.above.15,2));
+```
+
+# T-Student Verteilung
+### Aufgabe: 
+- Mit welcher Wahrscheinlichkeit liegt der Wert der Studentschen t-Verteilung unter -0.5, respektive unter 1? Der Freiheitsgrad sei 7.
+- Lösungsweg: Wahrscheinlichkeit p is mit R-Funktion pt(x, df) zu berechnen. 
+```{r}
+p.under.05 <- pt(-0.5, df=7)
+p.under.1 <- pt(1, df=7)
+```
+```{r echo =FALSE}
+paste ("Wahrscheinlichkeit, dass der Wert der Student-T-Verteilung bei 7 Freiheitsgrade unter -0.5 liegt:" , round(p.under.05,2));
+paste ("Wahrscheinlichkeit, dass der Wert der Student-T-Verteilung bei 7 Freiheitsgrade unter 1 liegt:" , round(p.under.1,2));
+```
+
+# Schiefe
+### Aufgabe: 
+- Bestimmen Sie die Schiefe der Wartezeiten von Faithful.
+- Lösungsweg : Schiefe mit der R-Funktion skewness berechnen.
+```{r}
+library(e1071)
+wait <- faithful$waiting
+sk <- skewness(wait)
+```
+```{r echo =FALSE}
+paste ("Schiefe der Wartezeite aus Faithful: ", round(sk,2));
+```
+- Interpretation: negative Schiefe weist auf einer Linkschiefe darauf hin.
+
+# Kurtosis
+### Aufgabe: 
+- Bestimmen Sie die Kurtosis der Wartezeiten von Faithful.
+- Lösungsweg : 
