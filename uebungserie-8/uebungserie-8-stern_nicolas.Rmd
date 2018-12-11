@@ -1,0 +1,17 @@
+---
+title: "Uebungserie_8_stern_nicolas"
+author: "Nicolas Stern"
+date: "11.12.2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Aufgabe1
+```{r}
+p.on.time <- punif(4, 0, 10, lower.tail = T)
+```
+```{r echo = FALSE}
+paste ("Wahrscheinlichkeit, dass ich rechtzeitig ins Büro ankomme: " , round(p.on.time,2));
+```
