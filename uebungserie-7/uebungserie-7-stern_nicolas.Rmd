@@ -13,10 +13,30 @@ Aufgabe: Sie haben um 9 Uhr ein wichtiges Meeting, aber Sie verschlafen und wach
 
 - Welche Verteilung hat die Zufallsvariable X, welche die gesamte Pendelzeit von Haustür bis ins Büro beschreibt?
 
+- Antwort: X ~ 16 + U(0, 10). 
+
+Begründung: Reisezeit setzt sich aus folg. konstante Zeiten:
+
+- 6 Minunten Gehzeit 
+- 10 Minuten minimale Bus-Fahrt 
+
+... und aus folgende gleichverteilte Zeiten:
+
+- 0-5 Minuten Wartezeit
+- 0-5 Minuten Bus-Fahrt zusätzlich zu den 10 Minuten minimal Reisezeit.
+
+d.h. X ~ 16 + U(0,10) 
+
 - Mit welcher Wahrscheinlichkeit schaffen Sie es noch rechtzeitig ins Büro?
+- Antwort : Die fixe Zeite setzen sich aus 6 Minuten Gehzeit bis zur Bushaltestelle, und 10 Minunten minimum Bus - Reisezeit. Die Variable Zeite setzen sich auf der 0 bis 5 Minuten Wartezeit (gleichverteilt) und die 0 bis 5 Minuten zusätzliche Reisezeit im Bus (auch gleichverteilt). 
+Die Wahrscheinlichkeit, dass ich es rechzeitig ins Büro schaffe ist dann gleich der Wahrscheinlickeit, dass die Variable Zeitabschnitten (Wartezeit + Reisezeit nach 10') zusammen weniger als 4 Minuten dauern. Mit punif berechnet man diese Wahrscheinlichkeit: 
+```{r}
+p.on.time <- punif(4, 0, 10, lower.tail = T)
+```
+```{r echo = FALSE}
+paste ("Wahrscheinlichkeit, dass ich rechtzeitig ins Büro ankomme: " , round(p.on.time,2));
+```
 
-
-# TODO : Stetige Gleichverteilung
 
 # Exponentialverteilung
 In einer vierwöchigen Datenerhebung missen Sie die Länge der Telefongespräche,die Sie auf Ihrem Handy führen. Sie finden heraus, dass die Dauer der Gespräche (in Minuten) einer Exponentialverteilung folgt, und Ihre Gespräche im Erwartungswert 3 Minuten lang sind 
@@ -29,7 +49,6 @@ In einer vierwöchigen Datenerhebung missen Sie die Länge der Telefongespräche
 
 Graphische Darstellung, mit Einsetzer der Werten $\lambda$ = 1/3 (Rate pro Minute eines Gespräches, also 3 Minuten per Gespräch, d.h. 1/3 per Minute).
 
-# TODO FIX PLOT
 ```{r}
 xvalues <- seq(0, 10, length=11)
 plot(xvalues, dexp(xvalues, rate=1/3), type = "l", 
@@ -71,12 +90,10 @@ D.h., die Wahrscheinlichkeit beträgt ca. 35 %, dass ein Gespräch zwischen eine
 - Antwort :
 
 ```{r}
-xvalues <- seq(0, 10, length=11)
-prob <- dexp(xvalues, rate=1/3)
-quantile (prob, probs=0.25 )
+qexp(0.25, rate=1/3, lower.tail = T)
 ```
 
-- Interpretation
+- Interpretation : 1 / 4 aller Gespräche dauern weniger als 86% einer Minute (oder ca. 51 Sekunden).
 
 # Normalverteilung
 
@@ -107,7 +124,7 @@ paste ("Wahrscheinlichkeit, dass der Gewicht einer Tüte ueber 205 g beträgt:" 
 
 3. Welches Gewicht wird von 95% der Tüten überschritten?
 
-- Lösungsweg : Wert auf der x-Achse wird über die R-Funktion qnorm berechnet.
+- Antwort: Wert auf der x-Achse wird über die R-Funktion qnorm berechnet.
 ```{r}
 weight.95.percent <- qnorm(p=0.95, mean = 200, sd = 4, lower.tail = F)
 ```
@@ -119,7 +136,7 @@ paste ("Gewicht, das von 95% der Tüten überschritten wird : " , round(weight.9
 # $\chi^2$ -Verteilung
 ### Aufgabe: 
 - Mit welcher Wahrscheinlichkeit liegt der Wert einer $\chi^2$ - Verteilung mit df = 11 über 15?
-- Lösungsweg: Wahrscheinlichkeit p wird mit R-Funktion pchisq(x, df) berechnet. Wahrscheinlichkeit, dass der Wert über ein Referenzwert liegt, wird mit 1 - pchisq(x, df) berechnet.
+- Antwort: Wahrscheinlichkeit p wird mit R-Funktion pchisq(x, df) berechnet. Wahrscheinlichkeit, dass der Wert über ein Referenzwert liegt, wird mit 1 - pchisq(x, df) berechnet.
 
 ```{r}
 p.above.15 <- 1-pchisq(15, df=11)
@@ -131,7 +148,7 @@ paste ("Wahrscheinlichkeit, dass der Wert der Chi-quadrat-Verteilung bei 11 Frei
 # T-Student Verteilung
 ### Aufgabe: 
 - Mit welcher Wahrscheinlichkeit liegt der Wert der Studentschen t-Verteilung unter -0.5, respektive unter 1? Der Freiheitsgrad sei 7.
-- Lösungsweg: Wahrscheinlichkeit p is mit R-Funktion pt(x, df) zu berechnen. 
+- Antwort: Wahrscheinlichkeit p is mit R-Funktion pt(x, df) zu berechnen. 
 ```{r}
 p.under.05 <- pt(-0.5, df=7)
 p.under.1 <- pt(1, df=7)
@@ -144,7 +161,7 @@ paste ("Wahrscheinlichkeit, dass der Wert der Student-T-Verteilung bei 7 Freihei
 # Schiefe
 ### Aufgabe: 
 - Bestimmen Sie die Schiefe der Wartezeiten von Faithful.
-- Lösungsweg : Schiefe mit der R-Funktion skewness berechnen.
+- Antwort: Schiefe mit der R-Funktion skewness berechnen.
 ```{r}
 library(e1071)
 wait <- faithful$waiting
@@ -158,8 +175,7 @@ paste ("Schiefe der Wartezeite aus Faithful: ", round(sk,2));
 # Kurtosis
 ### Aufgabe: 
 - Bestimmen Sie die Kurtosis der Wartezeiten von Faithful.
-- Lösungsweg : Bestimmung der Kurtosis mit R-Funktion kurtosis 
-
+- Antwort: 
 ```{r}
 kur <- kurtosis(wait)
 ```

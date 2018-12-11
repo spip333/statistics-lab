@@ -7,13 +7,70 @@
 #############################################################################
 # Uebungserie 7 - Trace
 
+# Stetige Gleichverteilung
+# Aufgabe: Sie haben um 9 Uhr ein wichtiges Meeting, aber Sie verschlafen und wachen 
+# erst um 8:30 Uhr auf. Um 8:40 rennen Sie aus der Tür, auf dem Weg ins Büro. 
+# Sie brauchen 6 Minuten zur Bushaltestelle. Sie warten auf den Bus, der morgens 
+# alle fünf Minuten kommt, die Wartezeit in Minuten ist gleichverteilt zwischen 0 und 5. 
+# Der Bus braucht zwischen 10 bis 15 Minuten (gleichverteilt) bis ins Büro. 
+# Modellieren Sie Ihre Reisezeit mit einer einzigen Variablen X. 
+xv <- 0:40
+plot(xv, dunif(xv, 6, 11), type="l")
 
+punif(10, 0, 5)
+
+
+dunif(10, 0,30)
+punif(10, 0, 30)
+punif(25, 0, 30, lower.tail = F)
+punif(20, 0, 30, lower.tail = T) -  punif(10, 0, 30, lower.tail = T) 
+  
+?punif
+
+#- Welche Verteilung hat die Zufallsvariable X, welche die gesamte Pendelzeit 
+# von Haustür bis ins Büro beschreibt?
+
+#############3
+#Suppose in a quiz there are 30 participants. A question is given to all 30 
+# participants and the time allowed to answer it is 25 seconds. Find the probability 
+# of participants responds within 6 seconds?
+xv <- 0:30
+plot(xv,dunif(xv, 0,25) , type="l")
+punif(6, 0, 25) *30 
+punif(4, 0, 10) 
+
+# Suppose a flight is about to land and the announcement says that the expected time 
+# to land is 30 minutes. Find the probability of getting flight land between 25 to 30 minutes?
+xv <- 0:30
+plot(xv,dunif(xv, 25,30) , type="l")
+
+x <- 1;
+a <- 0;
+b <- 4;
+
+plot(punif(x, a, b))
+
+qunif(0.5, a, b)
+
+?punif
 
 xv <- seq(0,5,length=100)
+xv <- 0:5
 plot(xv, dunif(xv,1,3), type = "l", ylab = "Uni(x)", xlab = "x")
+dunif(4, 3, 8)
+punif(5, 3, 8)
 
-dunif(1:15, 5, 10)
+dunif(0:5, 1, 3)
+punif(3, 1, 3)
 
+tot.time <- 0:100
+wait.bus <- 1:5
+0:15
+
+plot (0:15, dunif(0:15, 1, 3), type="l")
+
+
+?dunif
 
 # Aufgabe: Exponentialverteilung
 # In einer vierwöchigen Datenerhebung missen Sie die Länge der Telefongespräche, 
@@ -35,11 +92,23 @@ x<-pexp(3, rate=1/3)
 quantile(x)
 
 
+dexp()
+
 ?quantile
 
 xvalues <- seq(0, 10, length=11)
-prob <- dexp(xvalues, rate=1/3)
+prob <- dexp(0:10, rate=1/3)
 quantile (prob, probs=0.25 )
+
+
+plot( dexp(0:10, rate=1/3), type="l")
+
+qexp(0.25, rate=1/3, lower.tail = T)
+
+dexp(0.86, rate=1/3)
+
+.86 * 60
+
 
 # Aufgabe: Normalverteilung
 # Aufgabe: In einer Fabrik werden Tüten mit Kartoffelchips befüllt. Das durchschnittliche 
