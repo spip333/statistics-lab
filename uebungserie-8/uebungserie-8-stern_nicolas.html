@@ -132,29 +132,46 @@ $(document).ready(function () {
 <h1>Aufgabe: Intervallschätzung eines Mittelwertes <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma^2\)</span> bekannt</h1>
 <p>Für die Standardabweichung der Pulsrate der Studierenden gelte sigma = 11:69. Bestimmen Sie den Fehlerbereich und die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 99%.</p>
 <p>Lösung:</p>
-<pre class="r"><code># Laden / Initialierung der Daten aus Survey - Datensatz, mit Beseitigung der &lt;N/A&gt; Werte: 
-library(MASS)</code></pre>
+<pre class="r"><code>library(MASS)</code></pre>
 <pre><code>## Warning: package 'MASS' was built under R version 3.4.4</code></pre>
-<pre class="r"><code>pulse &lt;- na.omit(survey$Pulse)
+<pre class="r"><code># Laden / Initialierung der Daten aus Survey - Datensatz, mit Beseitigung der &lt;N/A&gt; Werte: 
+pulse &lt;- na.omit(survey$Pulse)
 n &lt;- length(pulse)
-sigma &lt;- 11.69
 
-# Standardfehler:
+# Berechnung der Standardfehler:
+sigma &lt;- 11.69
 sem &lt;- sigma/sqrt(n)
 
 # Fehlerbereich für den 99% Vertrauen (man setze 0.995 ein, um die beiden Seiten zu betrachten)
 ME &lt;- qnorm(0.995)*sem
 ME</code></pre>
 <pre><code>## [1] 2.173106</code></pre>
-<pre class="r"><code>x &lt;- mean(pulse)
-x+c(-ME, ME)</code></pre>
+<pre class="r"><code>mean.pulse &lt;- mean(pulse)
+
+# Berechnung der Endpünkte der Konfidenzintervall
+mean.pulse + c(-ME, ME)</code></pre>
 <pre><code>## [1] 71.97794 76.32415</code></pre>
 <p>Antwort : Bei einer Standardabweichung von 11.69 und einem Konfidenzniveau von 99% beträgt der Fehlerbereich 2.2 Pulsationen/Minute. Der wahre durchschnittliche Puls wird vom Konfidenzintervall [72.0-76.3] Pulsationen/Minute mit einer Wahrscheinlichkeit von 99% überdeckt.</p>
 </div>
 <div id="aufgabe-intervallschatzung-von-mu-sigma2-unbekannt" class="section level1">
 <h1>Aufgabe: Intervallschätzung von <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma^2\)</span> unbekannt</h1>
 <p>Aufgabe: Bestimmen Sie für die durchschnittliche Pulsrate den Fehlerbereich und die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 90%.</p>
-<pre><code>## [1] &quot;Put text here&quot;</code></pre>
+<p>Lösung:</p>
+<pre class="r"><code># Dateninitialisierung
+n &lt;- length(pulse)
+
+# Berechnung der Standardabweichung der Stichprobe mit R-Funktion sd.
+sa &lt;- sd(pulse)
+SE &lt;- sa/sqrt(n)
+
+# Fehlerbereich für den 90% Vertrauen (man setze 0.95 ein, um die beiden Seiten zu betrachten)
+E &lt;- qt(.95, df=n-1)*SE
+
+# Berechnung der Endpünkte der Konfidenzintervall
+mean.pulse &lt;- mean(pulse)
+round(mean.pulse + c(-E,E), 1)</code></pre>
+<pre><code>## [1] 72.8 75.5</code></pre>
+<p>Antwort : Bei einem Konfidenzniveau von 90% beträgt der Fehlerbereich 1.4 Pulsationen/Minute. Die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 90% ist durch die Intervall [72.8-75.5] Pulsationen/Minute gegeben.</p>
 </div>
 
 

@@ -15,20 +15,22 @@ Für die Standardabweichung der Pulsrate der Studierenden gelte sigma = 11:69. B
 Lösung:
 
 ```{r}
-# Laden / Initialierung der Daten aus Survey - Datensatz, mit Beseitigung der <N/A> Werte: 
 library(MASS)
+# Laden / Initialierung der Daten aus Survey - Datensatz, mit Beseitigung der <N/A> Werte: 
 pulse <- na.omit(survey$Pulse)
 n <- length(pulse)
-sigma <- 11.69
 
-# Standardfehler:
+# Berechnung der Standardfehler:
+sigma <- 11.69
 sem <- sigma/sqrt(n)
 
 # Fehlerbereich für den 99% Vertrauen (man setze 0.995 ein, um die beiden Seiten zu betrachten)
 ME <- qnorm(0.995)*sem
 ME
-x <- mean(pulse)
-x+c(-ME, ME)
+mean.pulse <- mean(pulse)
+
+# Berechnung der Endpünkte der Konfidenzintervall
+mean.pulse + c(-ME, ME)
 ```
 Antwort : Bei einer Standardabweichung von 11.69 und einem Konfidenzniveau von 99% beträgt der Fehlerbereich 2.2 Pulsationen/Minute. Der wahre durchschnittliche Puls wird vom Konfidenzintervall [72.0-76.3] Pulsationen/Minute mit einer Wahrscheinlichkeit von 99% überdeckt.
 
@@ -36,7 +38,23 @@ Antwort : Bei einer Standardabweichung von 11.69 und einem Konfidenzniveau von 9
 
 Aufgabe: Bestimmen Sie für die durchschnittliche Pulsrate den Fehlerbereich und die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 90%.
 
-```{r echo = FALSE}
+Lösung: 
 
-paste ("Put text here");
+```{r}
+# Dateninitialisierung
+n <- length(pulse)
+
+# Berechnung der Standardabweichung der Stichprobe mit R-Funktion sd.
+sa <- sd(pulse)
+SE <- sa/sqrt(n)
+
+# Fehlerbereich für den 90% Vertrauen (man setze 0.95 ein, um die beiden Seiten zu betrachten)
+E <- qt(.95, df=n-1)*SE
+
+# Berechnung der Endpünkte der Konfidenzintervall
+mean.pulse <- mean(pulse)
+round(mean.pulse + c(-E,E), 1)
+
 ```
+
+Antwort : Bei  einem Konfidenzniveau von 90% beträgt der Fehlerbereich 1.4 Pulsationen/Minute. Die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 90% ist durch die Intervall [72.8-75.5] Pulsationen/Minute gegeben.

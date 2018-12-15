@@ -35,4 +35,14 @@ x+c(-ME, ME)
 # Aufgabe: Bestimmen Sie für die durchschnittliche Pulsrate den Fehlerbereich 
 # und die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 90%.
 
+# Recherche : cf example demo-confidence-intervall
+
+
+pulse <- na.omit(survey$Pulse)
+n <- length(pulse)
+s <- sd(pulse)
+SE <- s/sqrt(n)
+E <- qt(.95, df=n-1)*SE
+xbar <- mean(pulse)
+xbar + c(-E,E)
 
