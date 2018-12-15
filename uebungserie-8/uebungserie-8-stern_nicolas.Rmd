@@ -8,10 +8,35 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# Aufgabe1
+# Aufgabe:  Intervallschätzung eines Mittelwertes $\mu$, $\sigma^2$ bekannt
+
+Für die Standardabweichung der Pulsrate der Studierenden gelte sigma = 11:69. Bestimmen Sie den Fehlerbereich und die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 99%.
+
+Lösung:
+
 ```{r}
-p.on.time <- punif(4, 0, 10, lower.tail = T)
+# Laden / Initialierung der Daten aus Survey - Datensatz, mit Beseitigung der <N/A> Werte: 
+library(MASS)
+pulse <- na.omit(survey$Pulse)
+n <- length(pulse)
+sigma <- 11.69
+
+# Standardfehler:
+sem <- sigma/sqrt(n)
+
+# Fehlerbereich für den 99% Vertrauen (man setze 0.995 ein, um die beiden Seiten zu betrachten)
+ME <- qnorm(0.995)*sem
+ME
+x <- mean(pulse)
+x+c(-ME, ME)
 ```
+Antwort : Bei einer Standardabweichung von 11.69 und einem Konfidenzniveau von 99% beträgt der Fehlerbereich 2.2 Pulsationen/Minute. Der wahre durchschnittliche Puls wird vom Konfidenzintervall [72.0-76.3] Pulsationen/Minute mit einer Wahrscheinlichkeit von 99% überdeckt.
+
+# Aufgabe: Intervallschätzung von $\mu$, $\sigma^2$ unbekannt
+
+Aufgabe: Bestimmen Sie für die durchschnittliche Pulsrate den Fehlerbereich und die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 90%.
+
 ```{r echo = FALSE}
-paste ("Wahrscheinlichkeit, dass ich rechtzeitig ins Büro ankomme: " , round(p.on.time,2));
+
+paste ("Put text here");
 ```
