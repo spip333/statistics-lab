@@ -37,7 +37,6 @@ x+c(-ME, ME)
 
 # Recherche : cf example demo-confidence-intervall
 
-
 pulse <- na.omit(survey$Pulse)
 n <- length(pulse)
 s <- sd(pulse)
@@ -45,4 +44,22 @@ SE <- s/sqrt(n)
 E <- qt(.95, df=n-1)*SE
 xbar <- mean(pulse)
 xbar + c(-E,E)
+
+#---------------------------------------------------------------------------------
+# Aufgabe: Stichprobengrösse bei mu
+# Aufgabe: Bestimmen Sie benötigte Stichprobengrösse für die durchschnittliche Pilsrate 
+# bei einem Fehlerbereich von 1 Puls und einem Konfidenzniveau von 99%.
+
+# Recherche : cf example demo-confidence-intervall
+
+pulse <- na.omit(survey$Pulse)
+zstar <- qnorm(.995)
+s <- sd(pulse)
+E <- 1
+zstar^2*s^2/E^2
+
+#---------------------------------------------------------------------------------
+# Aufgabe: Intervallschätzung von Populationsanteils p
+# Aufgabe: Bestimmen Sie den Fehlerbereich und die Intervallschätzung für den Anteil 
+# der Nichtraucher aus survey bei einem Konfidenzniveau von 90%.
 

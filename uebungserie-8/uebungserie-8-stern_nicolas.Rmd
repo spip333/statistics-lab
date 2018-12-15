@@ -10,9 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 # Aufgabe:  Intervallschätzung eines Mittelwertes $\mu$, $\sigma^2$ bekannt
 
-Für die Standardabweichung der Pulsrate der Studierenden gelte sigma = 11:69. Bestimmen Sie den Fehlerbereich und die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 99%.
+- Für die Standardabweichung der Pulsrate der Studierenden gelte sigma = 11:69. Bestimmen Sie den Fehlerbereich und die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 99%.
 
-Lösung:
+- Lösung:
 
 ```{r}
 library(MASS)
@@ -30,15 +30,17 @@ ME
 mean.pulse <- mean(pulse)
 
 # Berechnung der Endpünkte der Konfidenzintervall
-mean.pulse + c(-ME, ME)
+round(mean.pulse + c(-ME, ME), 1)
 ```
-Antwort : Bei einer Standardabweichung von 11.69 und einem Konfidenzniveau von 99% beträgt der Fehlerbereich 2.2 Pulsationen/Minute. Der wahre durchschnittliche Puls wird vom Konfidenzintervall [72.0-76.3] Pulsationen/Minute mit einer Wahrscheinlichkeit von 99% überdeckt.
+- Antwort : Bei einer Standardabweichung von 11.69 und einem Konfidenzniveau von 99% beträgt der Fehlerbereich 2.2 Pulsationen/Minute. Der wahre durchschnittliche Puls wird vom Konfidenzintervall [72.0-76.3] Pulsationen/Minute mit einer Wahrscheinlichkeit von 99% überdeckt.
+
+Bemerkung: die Benutzung von Werten mit Dezimalsstellen kann man hier begründen: Zwar ist eine Pulsation eine diskrete Grösse; eine Pulsrate darf trotzdem mit Dezimalstellen angegeben werden, denn die Pulsrate kann mit entsprechende Zeitintervallen in Ganzzahlen umgerechnet werden.
 
 # Aufgabe: Intervallschätzung von $\mu$, $\sigma^2$ unbekannt
 
-Aufgabe: Bestimmen Sie für die durchschnittliche Pulsrate den Fehlerbereich und die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 90%.
+- Aufgabe: Bestimmen Sie für die durchschnittliche Pulsrate den Fehlerbereich und die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 90%.
 
-Lösung: 
+- Lösung: 
 
 ```{r}
 # Dateninitialisierung
@@ -57,4 +59,24 @@ round(mean.pulse + c(-E,E), 1)
 
 ```
 
-Antwort : Bei  einem Konfidenzniveau von 90% beträgt der Fehlerbereich 1.4 Pulsationen/Minute. Die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 90% ist durch die Intervall [72.8-75.5] Pulsationen/Minute gegeben.
+- Antwort : Bei  einem Konfidenzniveau von 90% beträgt der Fehlerbereich 1.4 Pulsationen/Minute. Die Intervallschätzung der durchschnittlichen Pulsrate bei einem Konfidenzniveau von 90% ist durch die Intervall [72.8-75.5] Pulsationen/Minute gegeben.
+
+# Aufgabe: Stichprobengrösse bei $\mu$
+
+- Aufgabe: Bestimmen Sie benötigte Stichprobengrösse für die durchschnittliche Pulsrate bei einem Fehlerbereich von 1 Puls und einem Konfidenzniveau von 99%.
+
+- Lösung: 
+```{r}
+pulse <- na.omit(survey$Pulse)
+zstar <- qnorm(0.995)
+s <- sd(pulse)
+#Fehlerbereich
+E <- 1
+stichp.size <- zstar^2*s^2/E^2
+round(stichp.size, 0)
+```
+
+- Antwort: Für einen Konfidenzniveau von 99.5 % wird eine Stichprobengrösse von 629 Probanden benötigt. 
+# Aufgabe: Intervallschätzung von Populationsanteils p
+
+- Aufgabe: Bestimmen Sie den Fehlerbereich und die Intervallschätzung für den Anteil der Nichtraucher aus survey bei einem Konfidenzniveau von 90%.
