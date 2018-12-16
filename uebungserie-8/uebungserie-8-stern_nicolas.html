@@ -222,6 +222,20 @@ inter &lt;- round(pbar + c(-E,E), 3)</code></pre>
 <li>Antwort: der Fehlerbereich beträgt 0.026 bei einem Konfidenzniveau von 90%. Die Intervallschätzung wird vom 0.758, 0.844 zu 90% abgedeckt.</li>
 </ul>
 </div>
+<div id="aufgabe-stichprobengrosse-fur-p" class="section level1">
+<h1>Aufgabe: Stichprobengrösse für p</h1>
+<ul>
+<li><p>Aufgabe: Bestimmen Sie die Stichprobengrösse einer Umfrage zur Bestimmung des Anteils der Nichtraucher. Der Fehlerbereich soll 2% betragen. Sie vermuten aus früheren Umfragen eine Anteil in der Grösse von p = 0:8. Das Konfidenzniveau ist 99%.</p></li>
+<li><p>Lösung</p></li>
+</ul>
+<pre class="r"><code>zstar &lt;- qnorm(0.995)
+p &lt;- 0.8
+E &lt;- 0.02
+sample.size &lt;- zstar^2 * p * (1-p) / E^2</code></pre>
+<ul>
+<li>Antwort: Die notwendige Stichprobengrösse für die angegebenen Parameter is 2654 Probanden.</li>
+</ul>
+</div>
 
 
 

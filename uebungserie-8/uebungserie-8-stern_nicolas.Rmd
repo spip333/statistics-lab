@@ -109,5 +109,7 @@ inter <- round(pbar + c(-E,E), 3)
 zstar <- qnorm(0.995)
 p <- 0.8
 E <- 0.02
-zstar^2 * p * (1-p) / E^2
+sample.size <- zstar^2 * p * (1-p) / E^2
 ```
+
+- Antwort:  Die notwendige Stichprobengrösse für die angegebenen Parameter is `r round(sample.size, 0)` Probanden.
