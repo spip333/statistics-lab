@@ -73,10 +73,41 @@ s <- sd(pulse)
 #Fehlerbereich
 E <- 1
 stichp.size <- zstar^2*s^2/E^2
-round(stichp.size, 0)
 ```
 
-- Antwort: Für einen Konfidenzniveau von 99.5 % wird eine Stichprobengrösse von 629 Probanden benötigt. 
+- Antwort: Für einen Konfidenzniveau von 99.5 % wird eine Stichprobengrösse von `r round(stichp.size, 0) ` Probanden benötigt.
+
 # Aufgabe: Intervallschätzung von Populationsanteils p
 
 - Aufgabe: Bestimmen Sie den Fehlerbereich und die Intervallschätzung für den Anteil der Nichtraucher aus survey bei einem Konfidenzniveau von 90%.
+
+- Lösung:
+
+```{r}
+smoke <- na.omit(survey$Smoke)
+n <- length(smoke)
+k <- sum(smoke == "Never")
+pbar <- k/n
+pbar
+
+# Fehlerbereich bein einem Konfidenzniveau von 90%
+SE <- sqrt(pbar*(1-pbar)/n)
+SE
+E <- qnorm(.95)*SE
+
+# Intervallschätzung
+inter <- round(pbar + c(-E,E), 3)
+```
+- Antwort: der Fehlerbereich beträgt `r round(SE, 4)` bei einem Konfidenzniveau von 90%. Die Intervallschätzung wird vom `r inter ` zu 90% abgedeckt.
+
+# Aufgabe: Stichprobengrösse für p
+
+- Aufgabe: Bestimmen Sie die Stichprobengrösse einer Umfrage zur Bestimmung des Anteils der Nichtraucher. Der Fehlerbereich soll 2% betragen. Sie vermuten aus früheren Umfragen eine Anteil in der Grösse von p = 0:8. Das Konfidenzniveau ist 99%.
+
+- Lösung
+```{r}
+zstar <- qnorm(0.995)
+p <- 0.8
+E <- 0.02
+zstar^2 * p * (1-p) / E^2
+```

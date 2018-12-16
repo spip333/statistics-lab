@@ -62,4 +62,25 @@ zstar^2*s^2/E^2
 # Aufgabe: Intervallschätzung von Populationsanteils p
 # Aufgabe: Bestimmen Sie den Fehlerbereich und die Intervallschätzung für den Anteil 
 # der Nichtraucher aus survey bei einem Konfidenzniveau von 90%.
+smoke <- na.omit(survey$Smoke)
+n <- length(smoke)
+k <- sum(smoke == "Never")
+pbar <- k/n
+pbar
+SE <- sqrt(pbar*(1-pbar)/n)
+SE
+E <- qnorm(.95)*SE
+E
+pbar + c(-E,E)
+
+#---------------------------------------------------------------------------------
+# Aufgabe: Stichprobengrösse für p
+# Aufgabe: Bestimmen Sie die Stichprobengrösse einer Umfrage zur Bestimmung des Anteils
+# der Nichtraucher. Der Fehlerbereich soll 2% betragen. Sie vermuten aus früheren 
+# Umfragen eine Anteil in der Grösse von p = 0:8. Das Konfidenzniveau ist 99%.
+zstar <- qnorm(0.995)
+p <- 0.8
+E <- 0.02
+zstar^2 * p * (1-p) / E^2
+
 

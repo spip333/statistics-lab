@@ -193,11 +193,33 @@ zstar &lt;- qnorm(0.995)
 s &lt;- sd(pulse)
 #Fehlerbereich
 E &lt;- 1
-stichp.size &lt;- zstar^2*s^2/E^2
-round(stichp.size, 0)</code></pre>
-<pre><code>## [1] 906</code></pre>
+stichp.size &lt;- zstar^2*s^2/E^2</code></pre>
 <ul>
-<li>Antwort: Für einen Konfidenzniveau von 99.5 % wird eine Stichprobengrösse von 629 Probanden benötigt.</li>
+<li>Antwort: Für einen Konfidenzniveau von 99.5 % wird eine Stichprobengrösse von 906 Probanden benötigt.</li>
+</ul>
+</div>
+<div id="aufgabe-intervallschatzung-von-populationsanteils-p" class="section level1">
+<h1>Aufgabe: Intervallschätzung von Populationsanteils p</h1>
+<ul>
+<li><p>Aufgabe: Bestimmen Sie den Fehlerbereich und die Intervallschätzung für den Anteil der Nichtraucher aus survey bei einem Konfidenzniveau von 90%.</p></li>
+<li><p>Lösung:</p></li>
+</ul>
+<pre class="r"><code>smoke &lt;- na.omit(survey$Smoke)
+n &lt;- length(smoke)
+k &lt;- sum(smoke == &quot;Never&quot;)
+pbar &lt;- k/n
+pbar</code></pre>
+<pre><code>## [1] 0.8008475</code></pre>
+<pre class="r"><code># Fehlerbereich bein einem Konfidenzniveau von 90%
+SE &lt;- sqrt(pbar*(1-pbar)/n)
+SE</code></pre>
+<pre><code>## [1] 0.02599632</code></pre>
+<pre class="r"><code>E &lt;- qnorm(.95)*SE
+
+# Intervallschätzung
+inter &lt;- round(pbar + c(-E,E), 3)</code></pre>
+<ul>
+<li>Antwort: der Fehlerbereich beträgt 0.026 bei einem Konfidenzniveau von 90%. Die Intervallschätzung wird vom 0.758, 0.844 zu 90% abgedeckt.</li>
 </ul>
 </div>
 
