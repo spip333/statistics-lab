@@ -8,6 +8,55 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# Text
+
 ```{r}
+library(TeachingDemos)
 ```
+# Aufgabe: Linksseitiger Test bei $\mu$, $\sigma$ bekannt
+
+- Aufgabe: Die Datei „lightbulbs.txt“ enthält eine neue Stichprobe des Glühbirnenherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Glühbirnen eine Mindestlebensdauer von 10'000 Stunden besitzen, bei einem Signifikanzniveau von 1% verwerfen? Die Standardabweichung beträgt 120 Stunden.
+
+- Hypothese:
+
+H$_{0}$ :  $\mu$ >= 10'000 Stunden
+
+H$_{a}$ :  $\mu$ < 10'000 Stunden
+
+- Evaluation von H$_{0}$ :  
+
+```{r}
+# Daten einscannen, Eingabe der Parameter aus der Eingabe : Standardabweichung, Populationsmittlewert in Nullhypothese, und Stichprobengrösse:
+lightbulbs <- scan(file = "lightbulbs.txt")
+stddev <- 120 # Standardabweichung der Population
+mu <- 10000  # Populationsmittelwert in H0
+n <- 30 # Stichprobengrösse
+alpha <- 0.01 # Signifikanzniveau
+
+# Stichprobenmittlewert : 
+xbar <- mean(lightbulbs)
+
+# Z-Wert der Stichproben: 
+z.value <- (xbar - mu)/ (stddev /sqrt(n))
+
+# Kritischer Wert:
+z.value.alpha <- qnorm(alpha)
+
+```
+Z-Wert : `r round(z.value, 4)`
+Kritischer Wert : `r round(z.value.alpha, 4)`
+ 
+Z-Wert ist kleiner als der kritischen Wert, was dafür spricht,  H$_{0}$ zu verwerfen.
+
+- Alternativ kann die Hypothese durch Vergleich des P-Wertes mit dem Signifikanzniveau evaluiert werden:
+
+```{r}
+# P-Wert:
+p.value <- pnorm(z.value)
+```
+P-Wert : `r round(p.value, 6)`
+P-Wert ist kleiner als Signifikanzniveau, was auch dafür spricht, H$_{0}$ zu verwerfen. Mit einem P-Wert kleiner als 0.01 haben wir einen starken Hinweis gegen H0.
+
+# Aufgabe: Rechtsseitiger Test bei $\mu$, $\sigma$ bekannt
+
+- Aufgabe: Die Datei „cookies.txt“ enthält eine neue Stichprobe des Keksherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Kekse einen maximalen Anteil von 2 g enthalten, bei einem Signifikanzniveau von 10% verwerfen? Die Standardabweichung beträgt 0:25 g.
+
