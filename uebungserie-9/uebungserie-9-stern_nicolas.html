@@ -151,7 +151,7 @@ alpha &lt;- 0.01 # Signifikanzniveau
 # Stichprobenmittlewert : 
 xbar &lt;- mean(lightbulbs)
 
-# Z-Wert der Stichproben: 
+# Z-Wert : 
 z.value &lt;- (xbar - mu)/ (stddev /sqrt(n))
 
 # Kritischer Wert:
@@ -163,12 +163,37 @@ z.value.alpha &lt;- qnorm(alpha)</code></pre>
 </ul>
 <pre class="r"><code># P-Wert:
 p.value &lt;- pnorm(z.value)</code></pre>
-<p>P-Wert : 3.110^{-5} P-Wert ist kleiner als Signifikanzniveau, was auch dafür spricht, H<span class="math inline">\(_{0}\)</span> zu verwerfen. Mit einem P-Wert kleiner als 0.01 haben wir einen starken Hinweis gegen H0.</p>
+<p>P-Wert : 3.110^{-5}</p>
+<p>P-Wert ist kleiner als Signifikanzniveau, was auch dafür spricht, H<span class="math inline">\(_{0}\)</span> zu verwerfen. Mit einem P-Wert kleiner als 0.01 haben wir einen starken Hinweis gegen H0.</p>
 </div>
 <div id="aufgabe-rechtsseitiger-test-bei-mu-sigma-bekannt" class="section level1">
 <h1>Aufgabe: Rechtsseitiger Test bei <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span> bekannt</h1>
 <ul>
-<li>Aufgabe: Die Datei „cookies.txt“ enthält eine neue Stichprobe des Keksherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Kekse einen maximalen Anteil von 2 g enthalten, bei einem Signifikanzniveau von 10% verwerfen? Die Standardabweichung beträgt 0:25 g.</li>
+<li><p>Aufgabe: Die Datei “cookies.txt” enthält eine neue Stichprobe des Keksherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Kekse einen maximalen Anteil von 2 g enthalten, bei einem Signifikanzniveau von 10% verwerfen? Die Standardabweichung beträgt 0:25 g.</p></li>
+<li><p>Hypothese:</p></li>
+</ul>
+<p>H<span class="math inline">\(_{0}\)</span> : <span class="math inline">\(\mu\)</span> &lt;= 2 g</p>
+<p>H<span class="math inline">\(_{a}\)</span> : <span class="math inline">\(\mu\)</span> &gt; 2 g</p>
+<pre class="r"><code>cookies &lt;- scan(file = &quot;cookies.txt&quot;)
+xbar &lt;-  mean(cookies) # Stichproben Mittlewert
+mu0 &lt;- 2.0 # Mittlewert im Nullhypothese
+sigma &lt;- 0.25 # Standardabweichung der Population
+n &lt;- 35 # Stichprobengroesse
+alpha &lt;- 0.1 # Signifikanzniveau
+sem &lt;- sigma/sqrt(n) # standardfehler des mittlewerts
+z.value &lt;- (xbar-mu0) / sem # testgroess z-wert
+z.critical &lt;- qnorm(1 - 0.1) # kritischer Wert</code></pre>
+<p>Z-Wert : 0.4133</p>
+<p>Kritischer Wert : 1.2816</p>
+<p>Da der Z-Wert kleiner als der kritischen Wert, haben wir keinen Hinweis, der uns erlaubt, die Nullhpothese zu verwerfen. Wir dürfen die Nullhypothese behalten.</p>
+<ul>
+<li>Überprüfung beim Vergleich des P-Wertes und der Signifikanzniveau:</li>
+</ul>
+<pre class="r"><code>p.value &lt;- pnorm(z.value, lower.tail=FALSE)</code></pre>
+<p>P-Wert: 0.3397</p>
+<p>Da der P-Wert &gt; Signifikanzniveau, haben wir keinen Hinweis, der uns erlaubt, die Nullhpothese zu verwerfen. Wir dürfen die Nullhypothese behalten.</p>
+<ul>
+<li>Schlussfolgerung: Es ist mit den Daten,die wir zur Verfügung haben, nicht möglich, die Behauptung des Herstellers zu verwerfen.</li>
 </ul>
 </div>
 

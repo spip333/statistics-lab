@@ -35,7 +35,7 @@ alpha <- 0.01 # Signifikanzniveau
 # Stichprobenmittlewert : 
 xbar <- mean(lightbulbs)
 
-# Z-Wert der Stichproben: 
+# Z-Wert : 
 z.value <- (xbar - mu)/ (stddev /sqrt(n))
 
 # Kritischer Wert:
@@ -43,6 +43,7 @@ z.value.alpha <- qnorm(alpha)
 
 ```
 Z-Wert : `r round(z.value, 4)`
+
 Kritischer Wert : `r round(z.value.alpha, 4)`
  
 Z-Wert ist kleiner als der kritischen Wert, was dafür spricht,  H$_{0}$ zu verwerfen.
@@ -54,9 +55,49 @@ Z-Wert ist kleiner als der kritischen Wert, was dafür spricht,  H$_{0}$ zu verw
 p.value <- pnorm(z.value)
 ```
 P-Wert : `r round(p.value, 6)`
+
 P-Wert ist kleiner als Signifikanzniveau, was auch dafür spricht, H$_{0}$ zu verwerfen. Mit einem P-Wert kleiner als 0.01 haben wir einen starken Hinweis gegen H0.
 
 # Aufgabe: Rechtsseitiger Test bei $\mu$, $\sigma$ bekannt
 
-- Aufgabe: Die Datei „cookies.txt“ enthält eine neue Stichprobe des Keksherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Kekse einen maximalen Anteil von 2 g enthalten, bei einem Signifikanzniveau von 10% verwerfen? Die Standardabweichung beträgt 0:25 g.
+- Aufgabe: Die Datei "cookies.txt" enthält eine neue Stichprobe des Keksherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Kekse einen maximalen Anteil von 2 g enthalten, bei einem Signifikanzniveau von 10% verwerfen? Die Standardabweichung beträgt 0:25 g.
+
+- Hypothese:
+
+H$_{0}$ :  $\mu$ <= 2 g
+
+H$_{a}$ :  $\mu$ > 2 g
+
+- Evaluation von H$_{0}$ :
+
+```{r aufgabe2}
+cookies <- scan(file = "cookies.txt")
+xbar <-  mean(cookies) # Stichproben Mittlewert
+mu0 <- 2.0 # Mittlewert im Nullhypothese
+sigma <- 0.25 # Standardabweichung der Population
+n <- 35 # Stichprobengroesse
+alpha <- 0.1 # Signifikanzniveau
+sem <- sigma/sqrt(n) # standardfehler des mittlewerts
+z.value <- (xbar-mu0) / sem # testgroess z-wert
+z.critical <- qnorm(1 - 0.1) # kritischer Wert
+```
+Z-Wert : `r round(z.value, 4)`
+
+Kritischer Wert : `r round(z.critical, 4)`
+
+Da der Z-Wert kleiner als der kritischen Wert, haben wir keinen Hinweis, der uns erlaubt, die Nullhpothese zu verwerfen. Wir dürfen die Nullhypothese behalten.
+
+- Überprüfung beim Vergleich des P-Wertes und der Signifikanzniveau:
+```{r}
+p.value <- pnorm(z.value, lower.tail=FALSE)
+```
+
+P-Wert: `r round(p.value, 4)`
+
+Da der P-Wert > Signifikanzniveau, haben wir keinen Hinweis, der uns erlaubt, die Nullhpothese zu verwerfen. Wir dürfen die Nullhypothese behalten.
+
+- Schlussfolgerung: Es ist mit den Daten,die wir zur Verfügung haben, nicht möglich, die Behauptung des Herstellers zu verwerfen.
+
+
+
 

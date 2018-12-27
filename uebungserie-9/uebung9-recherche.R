@@ -30,7 +30,8 @@ p.value <- pnorm(z.value)
 qnorm(signifikanzniveau)
 
 
-#h0: lebensdauer > 10000
+#h0: lebensdauer is mindestens 10000
+#ha: lebensdauer <  10000
 
 
 xbar <- 9900 # stichproben mittlewert
@@ -52,10 +53,60 @@ pval
 alpha <- 0.01 # Stichprobenmittelwert
 z.alpha <- qnorm(alpha) # kritischer Wert
 z.alpha
-#---------------------------------------------------------------------------------
-# zweiseitige Hypothese
-n <- 400
-p <- 0.23
-p0 <- 0.2
 
-?z.test
+#---------------------------------------------------------------------------------
+# Daten einscannen, Eingabe der Parameter aus der Eingabe : Standardabweichung, Populationsmittlewert in Nullhypothese, und Stichprobengrösse:
+lightbulbs <- scan("./uebungserie-9/lightbulbs.txt")
+stddev <- 120 # Standardabweichung der Population
+mu <- 10000  # Populationsmittelwert in H0
+n <- 30 # Stichprobengrösse
+alpha <- 0.01 # Signifikanzniveau
+
+# Stichprobenmittlewert : 
+xbar <- mean(lightbulbs)
+
+# Z-Wert : 
+z.value <- (xbar - mu)/ (stddev /sqrt(n))
+
+# Kritischer Wert:
+z.value.alpha <- qnorm(alpha)
+
+z.test(x=9912, mu=10000, stdev=120, n=30, conf.level = 0.99, alternative = "less") 
+
+
+z.test(x=9912, mu=10000, stdev=120, n=30, conf.level = 0.99, alternative = "two.sided") 
+
+
+#---------------------------------------------------------------------------------
+# 
+# Aufgabe: Rechtsseitiger Test bei $\mu$, $\sigma$ bekannt
+# - Aufgabe: Die Datei „cookies.txt“ enthält eine neue Stichprobe des Keksherstellers.
+# Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe 
+# die Behauptung des Herstellers, dass die Kekse einen maximalen Anteil von 2 g enthalten,
+# bei einem Signifikanzniveau von 10% verwerfen? Die Standardabweichung beträgt 0.25 g.
+# H0 : mu <= 2g
+# Ha : mu > 2g
+
+cookies <- scan("./uebungserie-9/cookies.txt")
+head(cookies)
+mean(cookies)
+xbar <-  mean(cookies) # stichproben mittlewert
+# xbar <- 2.1
+mu0 <- 2.0 # Wert im NullHypothese
+sigma <- 0.25 # Standardabweichung der Population
+n <- 35 # Stichprobengroesse
+alpha <- 0.1 # Signifikanzniveau
+sem <- sigma/sqrt(n) # standardfehler des mittlewerts : ca. 0.04
+sem
+z <- (xbar-mu0) / sem # testgroess z-wert:  0.41
+z
+z.critical <- qnorm(1 - 0.1) # ca 1.3
+z > z.critical # TRUE => H0 wird verworfen
+
+# berechnung ueber p-value:
+pval <- pnorm(z, lower.tail=FALSE)
+pval
+
+pval < alpha
+
+z.test(x=xbar, mu=mu0, stdev=0.25, n=35, conf.level = 0.1, alternative = "greater") 
