@@ -9,9 +9,18 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r echo=FALSE}
 library(TeachingDemos)
 ```
+
+```{r echo=FALSE}
+rm(list = ls())
+setwd("C:/ieu/workspace/R/descriptive-statistik/uebungen/uebungserie-9")
+```
+
+
+# TODO check
+
 # Aufgabe: Linksseitiger Test bei $\mu$, $\sigma$ bekannt
 
 - Aufgabe: Die Datei „lightbulbs.txt“ enthält eine neue Stichprobe des Glühbirnenherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Glühbirnen eine Mindestlebensdauer von 10'000 Stunden besitzen, bei einem Signifikanzniveau von 1% verwerfen? Die Standardabweichung beträgt 120 Stunden.
@@ -58,6 +67,14 @@ P-Wert : `r round(p.value, 6)`
 
 P-Wert ist kleiner als Signifikanzniveau, was auch dafür spricht, H$_{0}$ zu verwerfen. Mit einem P-Wert kleiner als 0.01 haben wir einen starken Hinweis gegen H0.
 
+
+```{r echo=FALSE}
+rm(list = ls())
+setwd("C:/ieu/workspace/R/descriptive-statistik/uebungen/uebungserie-9")
+```
+
+# TODO check
+
 # Aufgabe: Rechtsseitiger Test bei $\mu$, $\sigma$ bekannt
 
 - Aufgabe: Die Datei "cookies.txt" enthält eine neue Stichprobe des Keksherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Kekse einen maximalen Anteil von 2 g enthalten, bei einem Signifikanzniveau von 10% verwerfen? Die Standardabweichung beträgt 0:25 g.
@@ -99,7 +116,14 @@ Da der P-Wert > Signifikanzniveau, haben wir keinen Hinweis, der uns erlaubt, di
 - Schlussfolgerung: Es ist mit den Daten,die wir zur Verfügung haben, nicht möglich, die Behauptung des Herstellers zu verwerfen.
 
 
-# Aufgabe: Zweiseitiger Test bei mu, sigma  bekannt
+```{r echo=FALSE}
+rm(list = ls())
+setwd("C:/ieu/workspace/R/descriptive-statistik/uebungen/uebungserie-9")
+```
+
+# TODO check
+
+# Aufgabe: Zweiseitiger Test bei  $\mu$, $\sigma$ bekannt
 
 - Aufgabe: Die Datei "penguins.txt" enthält eine neue Zufallsstichprobe einer Pinguinkolonie. Laden Sie die Datei mit dem Befehl scan. Das durchschnittliche Gewicht von antarktischen Königspinguinen diesern Kolonie betrug im letzten Jahr 15.4 kg. Lässt sich aufgrund dieser Stichprobe die Behauptung, dass sich das Durchschnittsgewicht der Pinguine nicht verändert hat, bei einem Signifikanzniveau von 5% verwerfen? Die Standardabweichung beträgt 2.5 kg
 
@@ -141,15 +165,165 @@ pval
 ```
 P-Wert `r round(pval, 4)` ist grösser als Signifikanzniveau. H0 wird nicht verworfen.
 
- 
-=====================================================
-# wip
-# Aufgabe: Linksseitiger Test bei $\mu$, $\sigma$ unbekannt
-- Aufgabe: Die Datei „lightbulbs.txt“ enthält eine neue Stichprobe des Glühbirnenherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Glühbirnen eine Mindestlebensdauer von 100000 Stunden besitzen, bei einem Signifikanzniveau von 1% verwerfen?
+# DONE, OK
 
-=====================================================
+```{r echo=FALSE}
+rm(list = ls())
+setwd("C:/ieu/workspace/R/descriptive-statistik/uebungen/uebungserie-9")
+```
+# Aufgabe: Linksseitiger Test bei $\mu$, $\sigma$ unbekannt
+
+- Aufgabe: Die Datei „lightbulbs.txt“ enthält eine neue Stichprobe des Glühbirnenherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Glühbirnen eine Mindestlebensdauer von 10000 Stunden besitzen, bei einem Signifikanzniveau von 1% verwerfen?
+
+- Hypothesen:
+
+    H$_{0}$ :  $\mu$ >= 10000
+
+    H$_{a}$ :  $\mu$ < 10000
+
+```{r}
+lightbulbs <- scan(file = "lightbulbs.txt")
+
+alpha <- 0.01 # Signifikanzniveau
+mu <- 10000 # Hypothetischer population - Mittelwert
+n <- length(lightbulbs) # Stichprobengrösse
+xbar <- mean(lightbulbs) # Mittlewert in der Stichproben
+s <- sd(lightbulbs)  # Standardabweichung in der Stichproben
+
+# Berechung der Test-Wert
+t <- (xbar - mu) / (s / sqrt(n))
+t
+
+# Berechnung der kritischen Wert
+t.alpha <- qt(p=alpha, df=n-1)
+t.alpha # kritischer Wert
+
+# Ist der Test-Wert > kritischer Wert, dann gibt es keine starke Evidenz gegen H0
+t > t.alpha 
+```
+Schlussfolgerung : H$_{0}$  wird verworfen
+
+Hypothese Prüfung mit Vergleich der P-Wert gegen Signifikanzniveau:
+
+```{r}
+p.val <- pt(t, df=n-1) # P-Wert
+p.val
+
+# Ist der P-Wert > Signifikanzniveau, dann gibt es keine starke Evidenz gegen H0
+p.val > alpha 
+```
+Schlussfolgerung : H$_{0}$  wird verworfen
+
+# DONE, OK
+
+```{r echo=FALSE}
+rm(list = ls())
+setwd("C:/ieu/workspace/R/descriptive-statistik/uebungen/uebungserie-9")
+```
+
+# Aufgabe: Rechtsseitiger Test bei $\mu$, $\sigma$ unbekannt
+
+- Aufgabe: Die Datei „cookies.txt“ enthält eine neue Stichprobe des Keksherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Kekse einen maximalen Anteil von 2 g enthalten, bei einem Signifikanzniveau von 10% verwerfen
+
+- Hypothesen:
+
+    H$_{0}$ :  $\mu$ <= 2
+
+    H$_{a}$ :  $\mu$ > 2
+
+```{r}
+cookies <- scan(file = "cookies.txt")
+
+alpha <- 0.1 # signifikanzniveau
+mu <- 2 # Hypothetischer population - Mittelwert
+n <- length(cookies) # Stichprobengrösse
+xbar <- mean(cookies) # Stichprobenmittelwert
+s <- sd(cookies) # Standardabweichung der Stichprobe
+
+# Berechung der Test-Wert
+t <- (xbar - mu) / (s / sqrt(n))
+t
+
+# Berechnung der kritischen Wert
+t.alpha <- qt(p=1-alpha, df=n-1)
+t.alpha # kritischer Wert
+
+# Ist der Test-Wert > kritischer Wert, dann wird H0 verworfen
+t > t.alpha 
+```
+
+Schlussfolgerung : es gibt keine starke Evidenz gegen H0
+
+Hypothese Prüfung mit Vergleich der P-Wert gegen Signifikanzniveau:
+
+```{r}
+p.val <- pt(t, df=n-1) # P-Wert
+p.val
+
+# Ist der P-Wert > Signifikanzniveau, dann gibt es keine starke Evidenz gegen H0
+p.val > alpha 
+```
+
+Schlussfolgerung : es gibt keine starke Evidenz gegen H$_{0}$
+
+# DONE , OK
+
+```{r echo=FALSE}
+rm(list = ls())
+setwd("C:/ieu/workspace/R/descriptive-statistik/uebungen/uebungserie-9")
+```
+# Aufgabe: Zweiseitiger Test bei mu, sigma unbekannt
+
+- Aufgabe: Die Datei „penguins.txt“ enthält eine neue Zufallsstichprobe einer Pinguinkolonie. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung, dass sich das Durchschnittsgewicht der Pinguine nicht verändert hat, bei einem Signifikanzniveau von 5% verwerfen?
+
+- Hypothesen: 
+
+    H$_{0}$ : mu = 15.4
+
+    H$_{a}$ : mu != 15.4
+
+```{r}
+penguins <- scan(file = "penguins.txt")
+
+alpha <- 0.05 # Signifikanzniveaz
+mu <- 15.4 # Durchnittsgewicht aus der Vorjahr
+n <- length(penguins) 
+xbar <- mean(penguins)
+s <- sd(penguins) 
+
+# Berechnung der kritischen Wert
+t <- (xbar - mu) / (s / sqrt(n))
+t
+
+# Berechnung der kritischen Wert
+t.alpha.low <- qt(p=alpha/2, df=n-1)
+t.alpha.low
+t.alpha.high <- qt(p=1-alpha/2, df=n-1)
+t.alpha.high
+
+# Ist der Test-Wert zwischen beiden kritischen Werten, dann gibt es keine starke Evidenz gegen h0
+t > t.alpha.low  && t < t.alpha.high
+```
+
+Schlussfolgerung : es gibt keine starke Evidenz gegen H0
+
+
+Hypothese Prüfung mit Vergleich der P-Wert gegen Signifikanzniveau:
+
+```{r}
+p.val <- pt(t, df=n-1)*2 # P-Wert
+p.val
+
+# Ist der P-Wert > Signifikanzniveau, dann gibt es keine starke Evidenz gegen H0
+p.val > alpha 
+```
+
+Schlussfolgerung : es gibt keine starke Evidenz gegen H$_{0}$
+
 # TODO
+
 ## Aufgabe: Linksseitiger Test des Populationsanteils p
+
 - Aufgabe: Die Datei „grocerystore.csv“ enthält eine Zufallsstichprobe von Kunden einer Metzgerei. Neben dem Geschlecht der Kunden wurde auch deren Verweilzeit im Laden notiert. Importieren Sie die Datei mit dem Befehl read.csv. Lässt sich aufgrund dieser Stichprobe die Behauptung, dass die Metzgerei mehrheitlich von Frauen besucht wird, bei einem Signifikanzniveau von <<<<5% verwerfen? 
 
 - Hypothesen: 
@@ -170,3 +344,12 @@ result <- test$p.value < alpha
 
 ```
 P-Wert > Signifikankzniveau : `r result` . H0 wird nicht verworfen
+
+# TODO
+
+# Aufgabe: Rechtsseitiger Test des Populationsanteils p
+
+# TODO
+
+# Aufgabe: Zweiseitiger Test des Populationsanteils p
+

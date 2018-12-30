@@ -128,8 +128,10 @@ $(document).ready(function () {
 </div>
 
 
-<pre class="r"><code>library(TeachingDemos)</code></pre>
 <pre><code>## Warning: package 'TeachingDemos' was built under R version 3.4.4</code></pre>
+<div id="todo-check" class="section level1">
+<h1>TODO check</h1>
+</div>
 <div id="aufgabe-linksseitiger-test-bei-mu-sigma-bekannt" class="section level1">
 <h1>Aufgabe: Linksseitiger Test bei <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span> bekannt</h1>
 <ul>
@@ -167,6 +169,9 @@ p.value &lt;- pnorm(z.value)</code></pre>
 <p>P-Wert : 3.110^{-5}</p>
 <p>P-Wert ist kleiner als Signifikanzniveau, was auch dafür spricht, H<span class="math inline">\(_{0}\)</span> zu verwerfen. Mit einem P-Wert kleiner als 0.01 haben wir einen starken Hinweis gegen H0.</p>
 </div>
+<div id="todo-check-1" class="section level1">
+<h1>TODO check</h1>
+</div>
 <div id="aufgabe-rechtsseitiger-test-bei-mu-sigma-bekannt" class="section level1">
 <h1>Aufgabe: Rechtsseitiger Test bei <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span> bekannt</h1>
 <ul>
@@ -200,8 +205,11 @@ z.critical &lt;- qnorm(1 - 0.1) # kritischer Wert</code></pre>
 <li>Schlussfolgerung: Es ist mit den Daten,die wir zur Verfügung haben, nicht möglich, die Behauptung des Herstellers zu verwerfen.</li>
 </ul>
 </div>
+<div id="todo-check-2" class="section level1">
+<h1>TODO check</h1>
+</div>
 <div id="aufgabe-zweiseitiger-test-bei-mu-sigma-bekannt" class="section level1">
-<h1>Aufgabe: Zweiseitiger Test bei mu, sigma bekannt</h1>
+<h1>Aufgabe: Zweiseitiger Test bei <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span> bekannt</h1>
 <ul>
 <li><p>Aufgabe: Die Datei “penguins.txt” enthält eine neue Zufallsstichprobe einer Pinguinkolonie. Laden Sie die Datei mit dem Befehl scan. Das durchschnittliche Gewicht von antarktischen Königspinguinen diesern Kolonie betrug im letzten Jahr 15.4 kg. Lässt sich aufgrund dieser Stichprobe die Behauptung, dass sich das Durchschnittsgewicht der Pinguine nicht verändert hat, bei einem Signifikanzniveau von 5% verwerfen? Die Standardabweichung beträgt 2.5 kg</p></li>
 <li><p>Hypothesen:</p>
@@ -240,6 +248,129 @@ x.o</code></pre>
 pval</code></pre>
 <pre><code>## [1] 0.138902</code></pre>
 <p>P-Wert 0.1389 ist grösser als Signifikanzniveau. H0 wird nicht verworfen.</p>
+</div>
+<div id="done-ok" class="section level1">
+<h1>DONE, OK</h1>
+</div>
+<div id="aufgabe-linksseitiger-test-bei-mu-sigma-unbekannt" class="section level1">
+<h1>Aufgabe: Linksseitiger Test bei <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span> unbekannt</h1>
+<ul>
+<li><p>Aufgabe: Die Datei „lightbulbs.txt“ enthält eine neue Stichprobe des Glühbirnenherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Glühbirnen eine Mindestlebensdauer von 10000 Stunden besitzen, bei einem Signifikanzniveau von 1% verwerfen?</p></li>
+<li><p>Hypothesen:</p>
+<p>H<span class="math inline">\(_{0}\)</span> : <span class="math inline">\(\mu\)</span> &gt;= 10000</p>
+<p>H<span class="math inline">\(_{a}\)</span> : <span class="math inline">\(\mu\)</span> &lt; 10000</p></li>
+</ul>
+<pre class="r"><code>lightbulbs &lt;- scan(file = &quot;lightbulbs.txt&quot;)
+
+alpha &lt;- 0.01 # Signifikanzniveau
+mu &lt;- 10000 # Hypothetischer population - Mittelwert
+n &lt;- length(lightbulbs) # Stichprobengrösse
+xbar &lt;- mean(lightbulbs) # Mittlewert in der Stichproben
+s &lt;- sd(lightbulbs)  # Standardabweichung in der Stichproben
+
+# Berechung der Test-Wert
+t &lt;- (xbar - mu) / (s / sqrt(n))
+t</code></pre>
+<pre><code>## [1] -4.918268</code></pre>
+<pre class="r"><code># Berechnung der kritischen Wert
+t.alpha &lt;- qt(p=alpha, df=n-1)
+t.alpha # kritischer Wert</code></pre>
+<pre><code>## [1] -2.462021</code></pre>
+<pre class="r"><code># Ist der Test-Wert &gt; kritischer Wert, dann gibt es keine starke Evidenz gegen H0
+t &gt; t.alpha </code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>Schlussfolgerung : H<span class="math inline">\(_{0}\)</span> wird verworfen</p>
+<p>Hypothese Prüfung mit Vergleich der P-Wert gegen Signifikanzniveau:</p>
+<pre class="r"><code>p.val &lt;- pt(t, df=n-1) # P-Wert
+p.val</code></pre>
+<pre><code>## [1] 1.591783e-05</code></pre>
+<pre class="r"><code># Ist der P-Wert &gt; Signifikanzniveau, dann gibt es keine starke Evidenz gegen H0
+p.val &gt; alpha </code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>Schlussfolgerung : H<span class="math inline">\(_{0}\)</span> wird verworfen</p>
+</div>
+<div id="done-ok-1" class="section level1">
+<h1>DONE, OK</h1>
+</div>
+<div id="aufgabe-rechtsseitiger-test-bei-mu-sigma-unbekannt" class="section level1">
+<h1>Aufgabe: Rechtsseitiger Test bei <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span> unbekannt</h1>
+<ul>
+<li><p>Aufgabe: Die Datei „cookies.txt“ enthält eine neue Stichprobe des Keksherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Kekse einen maximalen Anteil von 2 g enthalten, bei einem Signifikanzniveau von 10% verwerfen</p></li>
+<li><p>Hypothesen:</p>
+<p>H<span class="math inline">\(_{0}\)</span> : <span class="math inline">\(\mu\)</span> &lt;= 2</p>
+<p>H<span class="math inline">\(_{a}\)</span> : <span class="math inline">\(\mu\)</span> &gt; 2</p></li>
+</ul>
+<pre class="r"><code>cookies &lt;- scan(file = &quot;cookies.txt&quot;)
+
+alpha &lt;- 0.1 # signifikanzniveau
+mu &lt;- 2 # Hypothetischer population - Mittelwert
+n &lt;- length(cookies) # Stichprobengrösse
+xbar &lt;- mean(cookies) # Stichprobenmittelwert
+s &lt;- sd(cookies) # Standardabweichung der Stichprobe
+
+# Berechung der Test-Wert
+t &lt;- (xbar - mu) / (s / sqrt(n))
+t</code></pre>
+<pre><code>## [1] 0.3894174</code></pre>
+<pre class="r"><code># Berechnung der kritischen Wert
+t.alpha &lt;- qt(p=1-alpha, df=n-1)
+t.alpha # kritischer Wert</code></pre>
+<pre><code>## [1] 1.306952</code></pre>
+<pre class="r"><code># Ist der Test-Wert &gt; kritischer Wert, dann wird H0 verworfen
+t &gt; t.alpha </code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>Schlussfolgerung : es gibt keine starke Evidenz gegen H0</p>
+<p>Hypothese Prüfung mit Vergleich der P-Wert gegen Signifikanzniveau:</p>
+<pre class="r"><code>p.val &lt;- pt(t, df=n-1) # P-Wert
+p.val</code></pre>
+<pre><code>## [1] 0.650302</code></pre>
+<pre class="r"><code># Ist der P-Wert &gt; Signifikanzniveau, dann gibt es keine starke Evidenz gegen H0
+p.val &gt; alpha </code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Schlussfolgerung : es gibt keine starke Evidenz gegen H<span class="math inline">\(_{0}\)</span></p>
+</div>
+<div id="aufgabe-zweiseitiger-test-bei-mu-sigma-unbekannt" class="section level1">
+<h1>Aufgabe: Zweiseitiger Test bei mu, sigma unbekannt</h1>
+<ul>
+<li><p>Aufgabe: Die Datei „penguins.txt“ enthält eine neue Zufallsstichprobe einer Pinguinkolonie. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung, dass sich das Durchschnittsgewicht der Pinguine nicht verändert hat, bei einem Signifikanzniveau von 5% verwerfen?</p></li>
+<li><p>Hypothesen:</p>
+<p>H<span class="math inline">\(_{0}\)</span> : mu = 15.4</p>
+<p>H<span class="math inline">\(_{a}\)</span> : mu != 15.4</p></li>
+</ul>
+<pre class="r"><code>penguins &lt;- scan(file = &quot;penguins.txt&quot;)
+
+alpha &lt;- 0.05 # Signifikanzniveaz
+mu &lt;- 15.4 # Durchnittsgewicht aus der Vorjahr
+n &lt;- length(penguins) 
+xbar &lt;- mean(penguins)
+s &lt;- sd(penguins) 
+
+# Berechnung der kritischen Wert
+t &lt;- (xbar - mu) / (s / sqrt(n))
+t</code></pre>
+<pre><code>## [1] -1.394299</code></pre>
+<pre class="r"><code># Berechnung der kritischen Wert
+t.alpha.low &lt;- qt(p=alpha/2, df=n-1)
+t.alpha.low</code></pre>
+<pre><code>## [1] -2.032245</code></pre>
+<pre class="r"><code>t.alpha.high &lt;- qt(p=1-alpha/2, df=n-1)
+t.alpha.high</code></pre>
+<pre><code>## [1] 2.032245</code></pre>
+<pre class="r"><code># Ist der Test-Wert zwischen beiden kritischen Werten, dann gibt es keine starke Evidenz gegen h0
+t &gt; t.alpha.low  &amp;&amp; t &lt; t.alpha.high</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Schlussfolgerung : es gibt keine starke Evidenz gegen H0</p>
+<p>Hypothese Prüfung mit Vergleich der P-Wert gegen Signifikanzniveau:</p>
+<pre class="r"><code>p.val &lt;- pt(t, df=n-1)*2 # P-Wert
+p.val</code></pre>
+<pre><code>## [1] 0.1722724</code></pre>
+<pre class="r"><code># Ist der P-Wert &gt; Signifikanzniveau, dann gibt es keine starke Evidenz gegen H0
+p.val &gt; alpha </code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Schlussfolgerung : es gibt keine starke Evidenz gegen H<span class="math inline">\(_{0}\)</span></p>
+</div>
+<div id="todo" class="section level1">
+<h1>TODO</h1>
 <div id="aufgabe-linksseitiger-test-des-populationsanteils-p" class="section level2">
 <h2>Aufgabe: Linksseitiger Test des Populationsanteils p</h2>
 <ul>

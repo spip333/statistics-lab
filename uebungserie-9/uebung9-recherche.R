@@ -209,3 +209,105 @@ crit.val <- qt(p=1-alpha, df=24)
 crit.val
 t > crit.val
 
+# ==========================================================
+# Aufgabe: Linksseitiger Test bei $\mu$, $\sigma$ unbekannt
+# Aufgabe: Die Datei „lightbulbs.txt“ enthält eine neue Stichprobe des Glühbirnenherstellers.
+# Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die 
+# Behauptung des Herstellers, dass die Glühbirnen eine Mindestlebensdauer von 10000 Stunden 
+# besitzen, bei einem Signifikanzniveau von 1% verwerfen?
+# H0 : mu >= 10000
+# Ha : mu < 10000
+
+lightbulbs <- scan(file = "./uebungserie-9/lightbulbs.txt")
+head(lightbulbs)
+str(lightbulbs)
+length(lightbulbs)
+
+alpha <- 0.01
+mu <- 10000
+n <- length(lightbulbs)
+xbar <- mean(lightbulbs)
+s <- sd(lightbulbs)
+t <- (xbar - mu) / (s / sqrt(n))
+t
+
+# compare t-value against critical value
+t.alpha <- qt(p=alpha, df=n-1)
+t.alpha
+crit.val <- -t.alpha
+t > crit.val # when true: no evidence against h0, when t < crit.val: h0 rejected
+
+# alternative: 
+p.val <- pt(t, df=n-1)
+p.val
+p.val > alpha # when true: we have no evidence against h0
+
+# ==========================================================
+# Aufgabe: Rechtsseitiger Test bei mu, sigma unbekannt
+# Aufgabe: Die Datei „cookies.txt“ enthält eine neue Stichprobe des
+# Keksherstellers. Laden Sie die Datei mit dem Befehl scan.
+# Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers,
+# dass die Kekse einen maximalen Anteil von 2 g enthalten, bei einem
+# Signifikanzniveau von 10% verwerfen
+
+cookies <- scan(file = "./uebungserie-9/cookies.txt")
+head(cookies)
+str(cookies)
+length(cookies)
+
+alpha <- 0.1
+mu <- 2
+n <- length(cookies)
+xbar <- mean(cookies)
+s <- sd(cookies)
+t <- (xbar - mu) / (s / sqrt(n))
+t
+
+# compare t-value against critical value
+t.alpha <- qt(p=1-alpha, df=n-1)
+t.alpha
+t > crit.val # when true: h0 rejected. when t < crit.val: no evidence against h0
+
+# alternative: 
+p.val <- pt(t, df=n-1, lower.tail = F)
+p.val
+p.val > alpha # when true: we have no evidence against h0
+
+
+# ==========================================================
+# Aufgabe: Zweiseitiger Test bei mu, sigma unbekannt
+# Aufgabe: Die Datei „penguins.txt“ enthält eine neue Zufallsstichprobe
+# einer Pinguinkolonie. Laden Sie die Datei mit dem Befehl scan.
+# Lässt sich aufgrund dieser Stichprobe die Behauptung, dass sich das
+# Durchschnittsgewicht der Pinguine nicht verändert hat, bei einem
+# Signifikanzniveau von 5% verwerfen?
+# H0 : mu = 15.4
+# Ha : mu != 15.4
+penguins <- scan(file = "./uebungserie-9/penguins.txt")
+head(penguins)
+str(penguins)
+length(penguins)
+
+alpha <- 0.05
+mu <- 15.4
+n <- length(penguins)
+xbar <- mean(penguins)
+s <- sd(penguins)
+t <- (xbar - mu) / (s / sqrt(n))
+t
+
+# compare t-value against critical value
+t.alpha.low <- qt(p=alpha/2, df=n-1)
+t.alpha.high <- qt(p=1-alpha/2, df=n-1)
+
+# when t between tlow and thigh : no evidence against h0
+t > t.alpha.low  && t < t.alpha.high
+
+# alternative: 
+p.val <- pt(t, df=n-1) * 2
+p.val
+p.val > alpha # when true: we have no evidence against h0
+
+
+
+
