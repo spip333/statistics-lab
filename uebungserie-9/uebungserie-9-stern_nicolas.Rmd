@@ -64,9 +64,9 @@ P-Wert ist kleiner als Signifikanzniveau, was auch dafür spricht, H$_{0}$ zu ve
 
 - Hypothese:
 
-H$_{0}$ :  $\mu$ <= 2 g
+    - H$_{0}$ :  $\mu$ <= 2 g
 
-H$_{a}$ :  $\mu$ > 2 g
+    - H$_{a}$ :  $\mu$ > 2 g
 
 - Evaluation von H$_{0}$ :
 
@@ -99,5 +99,74 @@ Da der P-Wert > Signifikanzniveau, haben wir keinen Hinweis, der uns erlaubt, di
 - Schlussfolgerung: Es ist mit den Daten,die wir zur Verfügung haben, nicht möglich, die Behauptung des Herstellers zu verwerfen.
 
 
+# Aufgabe: Zweiseitiger Test bei mu, sigma  bekannt
 
+- Aufgabe: Die Datei "penguins.txt" enthält eine neue Zufallsstichprobe einer Pinguinkolonie. Laden Sie die Datei mit dem Befehl scan. Das durchschnittliche Gewicht von antarktischen Königspinguinen diesern Kolonie betrug im letzten Jahr 15.4 kg. Lässt sich aufgrund dieser Stichprobe die Behauptung, dass sich das Durchschnittsgewicht der Pinguine nicht verändert hat, bei einem Signifikanzniveau von 5% verwerfen? Die Standardabweichung beträgt 2.5 kg
 
+- Hypothesen:
+
+    - h0 : mu = 15.4 
+
+    - ha : mu != 15.4
+
+- Lösung durch Berechnung der Z-Value:
+
+```{r}
+penguins <- scan( file = "penguins.txt")
+xbar <- mean(penguins)
+mu0 <- 15.4
+sigma <- 2.5
+n <- 35
+alpha <- 0.05
+
+z <-  (xbar-mu0)/(sigma/sqrt(n))
+z
+z.alpha <- qnorm(1-alpha/2)
+z.alpha
+x.u <- mu0 - z.alpha * sigma / sqrt(35)
+x.u
+x.o <- mu0 + z.alpha * sigma / sqrt(35)
+x.o
+```
+Bereich der schwachen Indizien gegen H0 :  [`r round(x.u, 4)` ; `r round(x.o, 4)`]. 
+
+Der Mittlewert der Stichprobe `r round(xbar)` liegt im Bereich der schwachen Indizen gegen H0. 
+
+H0 wird nicht verworfen.
+
+- Lösung durch Berechnung der P-Wert :
+```{r}
+pval = 2 * pnorm(z)
+pval
+```
+P-Wert `r round(pval, 4)` ist grösser als Signifikanzniveau. H0 wird nicht verworfen.
+
+ 
+=====================================================
+# wip
+# Aufgabe: Linksseitiger Test bei $\mu$, $\sigma$ unbekannt
+- Aufgabe: Die Datei „lightbulbs.txt“ enthält eine neue Stichprobe des Glühbirnenherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Glühbirnen eine Mindestlebensdauer von 100000 Stunden besitzen, bei einem Signifikanzniveau von 1% verwerfen?
+
+=====================================================
+# TODO
+## Aufgabe: Linksseitiger Test des Populationsanteils p
+- Aufgabe: Die Datei „grocerystore.csv“ enthält eine Zufallsstichprobe von Kunden einer Metzgerei. Neben dem Geschlecht der Kunden wurde auch deren Verweilzeit im Laden notiert. Importieren Sie die Datei mit dem Befehl read.csv. Lässt sich aufgrund dieser Stichprobe die Behauptung, dass die Metzgerei mehrheitlich von Frauen besucht wird, bei einem Signifikanzniveau von <<<<5% verwerfen? 
+
+- Hypothesen: 
+
+    - h0 : Anteil Frauen > 0.5
+
+    - ha : Anteil Frauen <= 0.5
+
+```{r}
+grocery <- read.csv(file="grocerystore.csv", header = T, sep=";" )
+
+n <- nrow(grocery)
+n.frauen <- nrow(grocery[grocery$gender == "F", ])
+
+test <- prop.test(n.frauen, n, alternative = "less", correct = FALSE)
+
+result <- test$p.value < alpha
+
+```
+P-Wert > Signifikankzniveau : `r result` . H0 wird nicht verworfen

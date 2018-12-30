@@ -109,4 +109,103 @@ pval
 
 pval < alpha
 
-z.test(x=xbar, mu=mu0, stdev=0.25, n=35, conf.level = 0.1, alternative = "greater") 
+z.test(x=xbar, mu=mu0, stdev=0.25, n=35, conf.level = 0.9, alternative = "greater") 
+
+
+#============================================
+# Aufgabe: Zweiseitiger Test bei mu, sigma  bekannt
+# Aufgabe: Die Datei "penguins.txt" enthält eine neue Zufallsstichprobe einer Pinguinkolonie. 
+# Laden Sie die Datei mit dem Befehl scan. Das durchschnittliche Gewicht von antarktischen 
+# Königspinguinen diesern Kolonie betrug im letzten Jahr 15.4 kg. Lässt sich aufgrund dieser 
+# Stichprobe die Behauptung, dass sich das Durchschnittsgewicht der Pinguine nicht verändert hat,
+# bei einem Signifikanzniveau von 5% verwerfen? Die Standardabweichung beträgt 2.5 kg
+penguins <- scan("./uebungserie-9/penguins.txt")
+head(penguins)
+# h0: mu = 15.4 ha: mu <> 15.4
+# xbar <- mean(penguins)
+xbar <-14.6
+mu0 <- 15.4
+sigma <- 2.5
+n <- 35
+z <-  (xbar-mu0)/(sigma/sqrt(n))
+alpha <- 0.05
+z.alpha <- qnorm(1-alpha/2)
+c(-z.alpha, z.alpha)
+x.unten <- mu0 - z.alpha * sigma / sqrt(35)
+x.oben <- mu0 + z.alpha * sigma / sqrt(35)
+
+
+
+#============================================
+# Aufgabe: Linksseitiger Test des Populationsanteils p
+# Aufgabe: Die Datei „grocerystore.csv“ enthält eine Zufallsstichprobe
+# von Kunden einer Metzgerei. Neben dem Geschlecht der Kunden
+# wurde auch deren Verweilzeit im Laden notiert. Importieren Sie die
+# Datei mit dem Befehl read.csv.
+# Lässt sich aufgrund dieser Stichprobe die Behauptung, dass die
+# Metzgerei mehrheitlich von Frauen besucht wird, bei einem
+# Signifikanzniveau von 5% verwerfen?
+grocery <- read.csv(file="./uebungserie-9/grocerystore.csv", header = T, sep=";" )
+head(grocery)
+dim(grocery)
+str(grocery)
+grocery
+frau.filter <- grocery$gender=="F"
+mann.filter <- grocery$gender=="M"
+frauen <- grocery[frau.filter,]
+maenner <- grocery[mann.filter,]
+
+n.frauen <- nrow(grocery[grocery$gender == "F", ])
+n.men <- nrow(grocery[grocery$gender == "M", ])
+
+
+pbar <- nrow(frauen) / nrow(grocery)
+p0 <- 0.5
+alpha <- 0.05
+n <- nrow(grocery)
+z <- (pbar-p0) / sqrt(p0*(1-p0)/n)
+
+z.alpha <- qnorm(1-alpha/2)
+c(-z.alpha, z.alpha)
+pval <- 2*pnorm(z, lower.tail=FALSE)
+pval
+
+test <- prop.test(n.frauen, n, alternative = "less", correct = FALSE)
+
+test$p.value < alpha
+
+# ----------------------------------
+xbar <- 104
+mu <- 100
+n <- 35
+s <- 12
+alpha <- .05
+t <- (xbar - mu) / (s / sqrt(n))
+t
+krit.value <- qt(1-alpha/2, df = 35)
+krit.value
+
+pnorm(1.972,lower.tail = F)
+pt(1.972, df=34, lower.tail = F)
+
+
+
+# dehydration example:
+# h0: mu = 0.95
+# ha: mu != 0.95
+mu <- 0.95
+n <- 25
+xbar <- 1
+s <- 0.18
+t <- (xbar - mu) / (s / sqrt(n))
+t
+p.val <- pt(t, df=24, lower.tail = F) * 2
+p.val
+alpha <- 0.05
+p.val > alpha # when true: we have no evidence against h0
+
+# compare t-value against critical value
+crit.val <- qt(p=1-alpha, df=24)
+crit.val
+t > crit.val
+

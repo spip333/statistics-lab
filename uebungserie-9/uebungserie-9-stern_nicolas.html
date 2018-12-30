@@ -156,7 +156,8 @@ z.value &lt;- (xbar - mu)/ (stddev /sqrt(n))
 
 # Kritischer Wert:
 z.value.alpha &lt;- qnorm(alpha)</code></pre>
-<p>Z-Wert : -4.006 Kritischer Wert : -2.3263</p>
+<p>Z-Wert : -4.006</p>
+<p>Kritischer Wert : -2.3263</p>
 <p>Z-Wert ist kleiner als der kritischen Wert, was dafür spricht, H<span class="math inline">\(_{0}\)</span> zu verwerfen.</p>
 <ul>
 <li>Alternativ kann die Hypothese durch Vergleich des P-Wertes mit dem Signifikanzniveau evaluiert werden:</li>
@@ -170,10 +171,13 @@ p.value &lt;- pnorm(z.value)</code></pre>
 <h1>Aufgabe: Rechtsseitiger Test bei <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span> bekannt</h1>
 <ul>
 <li><p>Aufgabe: Die Datei “cookies.txt” enthält eine neue Stichprobe des Keksherstellers. Laden Sie die Datei mit dem Befehl scan. Lässt sich aufgrund dieser Stichprobe die Behauptung des Herstellers, dass die Kekse einen maximalen Anteil von 2 g enthalten, bei einem Signifikanzniveau von 10% verwerfen? Die Standardabweichung beträgt 0:25 g.</p></li>
-<li><p>Hypothese:</p></li>
+<li><p>Hypothese:</p>
+<ul>
+<li><p>H<span class="math inline">\(_{0}\)</span> : <span class="math inline">\(\mu\)</span> &lt;= 2 g</p></li>
+<li><p>H<span class="math inline">\(_{a}\)</span> : <span class="math inline">\(\mu\)</span> &gt; 2 g</p></li>
+</ul></li>
+<li><p>Evaluation von H<span class="math inline">\(_{0}\)</span> :</p></li>
 </ul>
-<p>H<span class="math inline">\(_{0}\)</span> : <span class="math inline">\(\mu\)</span> &lt;= 2 g</p>
-<p>H<span class="math inline">\(_{a}\)</span> : <span class="math inline">\(\mu\)</span> &gt; 2 g</p>
 <pre class="r"><code>cookies &lt;- scan(file = &quot;cookies.txt&quot;)
 xbar &lt;-  mean(cookies) # Stichproben Mittlewert
 mu0 &lt;- 2.0 # Mittlewert im Nullhypothese
@@ -195,6 +199,67 @@ z.critical &lt;- qnorm(1 - 0.1) # kritischer Wert</code></pre>
 <ul>
 <li>Schlussfolgerung: Es ist mit den Daten,die wir zur Verfügung haben, nicht möglich, die Behauptung des Herstellers zu verwerfen.</li>
 </ul>
+</div>
+<div id="aufgabe-zweiseitiger-test-bei-mu-sigma-bekannt" class="section level1">
+<h1>Aufgabe: Zweiseitiger Test bei mu, sigma bekannt</h1>
+<ul>
+<li><p>Aufgabe: Die Datei “penguins.txt” enthält eine neue Zufallsstichprobe einer Pinguinkolonie. Laden Sie die Datei mit dem Befehl scan. Das durchschnittliche Gewicht von antarktischen Königspinguinen diesern Kolonie betrug im letzten Jahr 15.4 kg. Lässt sich aufgrund dieser Stichprobe die Behauptung, dass sich das Durchschnittsgewicht der Pinguine nicht verändert hat, bei einem Signifikanzniveau von 5% verwerfen? Die Standardabweichung beträgt 2.5 kg</p></li>
+<li><p>Hypothesen:</p>
+<ul>
+<li><p>h0 : mu = 15.4</p></li>
+<li><p>ha : mu != 15.4</p></li>
+</ul></li>
+<li><p>Lösung durch Berechnung der Z-Value:</p></li>
+</ul>
+<pre class="r"><code>penguins &lt;- scan( file = &quot;penguins.txt&quot;)
+xbar &lt;- mean(penguins)
+mu0 &lt;- 15.4
+sigma &lt;- 2.5
+n &lt;- 35
+alpha &lt;- 0.05
+
+z &lt;-  (xbar-mu0)/(sigma/sqrt(n))
+z</code></pre>
+<pre><code>## [1] -1.479892</code></pre>
+<pre class="r"><code>z.alpha &lt;- qnorm(1-alpha/2)
+z.alpha</code></pre>
+<pre><code>## [1] 1.959964</code></pre>
+<pre class="r"><code>x.u &lt;- mu0 - z.alpha * sigma / sqrt(35)
+x.u</code></pre>
+<pre><code>## [1] 14.57176</code></pre>
+<pre class="r"><code>x.o &lt;- mu0 + z.alpha * sigma / sqrt(35)
+x.o</code></pre>
+<pre><code>## [1] 16.22824</code></pre>
+<p>Bereich der schwachen Indizien gegen H0 : [14.5718 ; 16.2282].</p>
+<p>Der Mittlewert der Stichprobe 15 liegt im Bereich der schwachen Indizen gegen H0.</p>
+<p>H0 wird nicht verworfen.</p>
+<ul>
+<li>Lösung durch Berechnung der P-Wert :</li>
+</ul>
+<pre class="r"><code>pval = 2 * pnorm(z)
+pval</code></pre>
+<pre><code>## [1] 0.138902</code></pre>
+<p>P-Wert 0.1389 ist grösser als Signifikanzniveau. H0 wird nicht verworfen.</p>
+<div id="aufgabe-linksseitiger-test-des-populationsanteils-p" class="section level2">
+<h2>Aufgabe: Linksseitiger Test des Populationsanteils p</h2>
+<ul>
+<li><p>Aufgabe: Die Datei „grocerystore.csv“ enthält eine Zufallsstichprobe von Kunden einer Metzgerei. Neben dem Geschlecht der Kunden wurde auch deren Verweilzeit im Laden notiert. Importieren Sie die Datei mit dem Befehl read.csv. Lässt sich aufgrund dieser Stichprobe die Behauptung, dass die Metzgerei mehrheitlich von Frauen besucht wird, bei einem Signifikanzniveau von &lt;&lt;&lt;&lt;5% verwerfen?</p></li>
+<li><p>Hypothesen:</p>
+<ul>
+<li><p>h0 : Anteil Frauen &gt; 0.5</p></li>
+<li><p>ha : Anteil Frauen &lt;= 0.5</p></li>
+</ul></li>
+</ul>
+<pre class="r"><code>grocery &lt;- read.csv(file=&quot;grocerystore.csv&quot;, header = T, sep=&quot;;&quot; )
+
+n &lt;- nrow(grocery)
+n.frauen &lt;- nrow(grocery[grocery$gender == &quot;F&quot;, ])
+
+test &lt;- prop.test(n.frauen, n, alternative = &quot;less&quot;, correct = FALSE)
+
+result &lt;- test$p.value &lt; alpha</code></pre>
+<p>P-Wert &gt; Signifikankzniveau : FALSE . H0 wird nicht verworfen</p>
+</div>
 </div>
 
 
