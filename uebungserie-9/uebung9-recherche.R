@@ -88,28 +88,21 @@ z.test(x=9912, mu=10000, stdev=120, n=30, conf.level = 0.99, alternative = "two.
 # Ha : mu > 2g
 
 cookies <- scan("./uebungserie-9/cookies.txt")
-head(cookies)
-mean(cookies)
-xbar <-  mean(cookies) # stichproben mittlewert
-# xbar <- 2.1
-mu0 <- 2.0 # Wert im NullHypothese
+xbar <-  mean(cookies) # Stichproben Mittlewert
+mu <- 2.0 # Populationsmittelwert
 sigma <- 0.25 # Standardabweichung der Population
-n <- 35 # Stichprobengroesse
+n <- length(cookies) # Stichprobengroesse
 alpha <- 0.1 # Signifikanzniveau
-sem <- sigma/sqrt(n) # standardfehler des mittlewerts : ca. 0.04
-sem
-z <- (xbar-mu0) / sem # testgroess z-wert:  0.41
-z
-z.critical <- qnorm(1 - 0.1) # ca 1.3
-z > z.critical # TRUE => H0 wird verworfen
 
-# berechnung ueber p-value:
-pval <- pnorm(z, lower.tail=FALSE)
-pval
+# Test-Wert : 
+z.value <- (xbar - mu)/ (sigma /sqrt(n))
+z.value
 
-pval < alpha
+# Kritischer Wert:
+z.alpha <- qnorm(1-alpha)
 
-z.test(x=xbar, mu=mu0, stdev=0.25, n=35, conf.level = 0.9, alternative = "greater") 
+# Ist der Test-Wert > kritischer Wert, dann wird H0 verworfen
+z.value > z.alpha
 
 
 #============================================
