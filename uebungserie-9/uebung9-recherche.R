@@ -314,15 +314,37 @@ p.val > alpha # when true: we have no evidence against h0
 # Lässt sich aufgrund dieser Stichprobe die Behauptung, dass die
 # Metzgerei mehrheitlich von Frauen besucht wird, bei einem
 # Signifikanzniveau von 5% verwerfen?
+
+# ich interpretiere die Fragestellung wie folgt: 
+
+# Aufgabe: Linksseitiger Test des Populationsanteils p
+# h0 : Anteil Frauen >= 0.5
+# ha : Anteil Frauen < 0.5
+
+# daten einlesen, prüfung der Struktur
 grocery <- read.csv(file="./uebungserie-9/grocerystore.csv", header = T, sep=";" )
-head(grocery)
-dim(grocery)
 str(grocery)
+grocery$gender
 
 n <- nrow(grocery)
 alpha <- 0.05
-pbar <- mean(grocery$shopping_minutes)
+anz.frauen <- nrow(grocery[grocery$gender == "F", ])
+anz.maenner <- nrow(grocery[grocery$gender == "M", ])
+p <- anz.frauen / n
 p0 <- 0.5
+
+z.val <- (p - p0) / sqrt(p0 * (1-p0) / n)
+
+z.alpha <- qnorm(alpha)
+
+#h0 wird verworfen, wenn z < z.alpha
+z.val < z.alpha
+# h0 wird behalten
+
+test <- prop.test(anz.frauen, n, alternative = "less", correct = FALSE)
+
+test$p.value < p
+# H0 wird nicht verworfen
 
 
 #============================================
@@ -337,21 +359,47 @@ p0 <- 0.5
 # nicht übersteigen?
 cc <- read.csv(file="./uebungserie-9/creditcards.csv", header = T, sep=";" )
 
+length(cc$bounced) == length(cc[cc$bounced == "Yes",]) + length(cc[cc$bounced == "No",])
+length(cc)
+
 # h0 : p <= 0.12
 # ha : p > 0.12
+alpha <- 0.05
+n <- nrow(cc)
+str(cc)
+colnames(cc)
+cc[cc$bounced == "No",]
+length(cc[cc$bounced == "Yes",])
+length(cc[cc$bounced == "No",])
+length(cc[cc$bounced == "Yes",]) + length(cc[cc$bounced == "No",])
+
 p0 <- 0.12
+p <- length(cc[cc$bounced == "Yes",]) / n 
 
+z.val <- (p - p0) / sqrt(p0 * (1 - p0) / n)
 
+# crit val.
+z.alpha <- qnorm(1-alpha)
 
+# h0 wird verworfen wenn z.val < z.alpha
+z.val < z.alpha
+# h0 wird verworfen.
 
+# Prüfung über p-wert:
+p.val <- pnorm(z.val, lower.tail = F)
 
+# h0 wird verworfen wenn p.val < alpha
+p.val < alpha
+# h0 wird verworfen.
 
 #============================================
 #Aufgabe: Zweiseitiger Test des Populationsanteils p
 #Aufgabe: Der Anteil der Rechtshänder unter den Studierenden von
 #survey wird auf 90% geschätzt. Lässt sich diese Behauptung bei
 #einem Signifikanzniveau von 1% verwerfen?
-survey
+str(survey)
+
+survey[survey$W.Hnd == "Right",]
 
 nrow(survey)
 nrow (survey[survey$W.Hnd == "Right",])

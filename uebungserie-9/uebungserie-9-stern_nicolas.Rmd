@@ -328,13 +328,11 @@ p.val
 p.val > alpha 
 ```
 
-Schlussfolgerung : es gibt keine starke Evidenz gegen H$_{0}$
+Schlussfolgerung : es gibt keine starke Evidenz gegen H$_{0}$. H$_{0}$ wird behalten.
 
-# TODO
+# Aufgabe: Linksseitiger Test des Populationsanteils p
 
-## Aufgabe: Linksseitiger Test des Populationsanteils p
-
-- Aufgabe: Die Datei „grocerystore.csv“ enthält eine Zufallsstichprobe von Kunden einer Metzgerei. Neben dem Geschlecht der Kunden wurde auch deren Verweilzeit im Laden notiert. Importieren Sie die Datei mit dem Befehl read.csv. Lässt sich aufgrund dieser Stichprobe die Behauptung, dass die Metzgerei mehrheitlich von Frauen besucht wird, bei einem Signifikanzniveau von <<<<5% verwerfen? 
+- Aufgabe: Die Datei „grocerystore.csv“ enthält eine Zufallsstichprobe von Kunden einer Metzgerei. Neben dem Geschlecht der Kunden wurde auch deren Verweilzeit im Laden notiert. Importieren Sie die Datei mit dem Befehl read.csv. Lässt sich aufgrund dieser Stichprobe die Behauptung, dass die Metzgerei mehrheitlich von Frauen besucht wird, bei einem Signifikanzniveau von <5% verwerfen? 
 
 - Hypothesen: 
 
@@ -342,18 +340,41 @@ Schlussfolgerung : es gibt keine starke Evidenz gegen H$_{0}$
 
     - ha : Anteil Frauen <= 0.5
 
+- Daten einlesen, Prüfung der Struktur
 ```{r}
 grocery <- read.csv(file="grocerystore.csv", header = T, sep=";" )
+str(grocery)
+```
+- Prüfung von H$_{0}$ über Berechnung des Test-Wertes:
 
+```{r}
 n <- nrow(grocery)
-n.frauen <- nrow(grocery[grocery$gender == "F", ])
+anz.frauen <- nrow(grocery[grocery$gender == "F", ])
 
-test <- prop.test(n.frauen, n, alternative = "less", correct = FALSE)
+alpha <- 0.05
+p <- anz.frauen / n
+p0 <- 0.5
 
-result <- test$p.value < alpha
+z.val <- (p - p0) / sqrt(p0 * (1-p0) / n)
+
+z.alpha <- qnorm(alpha)
+
+#h0 wird verworfen, wenn z < z.alpha
+z.val < z.alpha
+```
+Schlussfolgerung : H$_{0}$ wird behalten, weil der Testwert kleiner als der kritischen Wert ist.
+
+- Prüfung von  H$_{0}$ durch Vergleich des P-Wertes gegen Signifikanzniveau:
+
+```{r}
+# Berechnung des P-wertes:
+p.val <- pnorm(z.val)
+
+# h0 wird verworfen wenn p.val < alpha
+p.val < alpha
 
 ```
-P-Wert > Signifikankzniveau : `r result` . H0 wird nicht verworfen
+H$_{0}$ wird nicht verworfen, weil P-Wert > Signifikankzniveau.
 
 ```{r echo=FALSE}
 rm(list = ls())
@@ -405,7 +426,7 @@ Schlussfolgerung : H$_{0}$ wird verworfen, da der Test-Wert kleiner als der krit
 
 ```{r}
 
-# Prüfung über p-wert:
+# Berechnung des P-wertes:
 p.val <- pnorm(z.val, lower.tail = F)
 
 # h0 wird verworfen wenn p.val < alpha

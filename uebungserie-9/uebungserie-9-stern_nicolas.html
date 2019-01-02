@@ -377,30 +377,52 @@ p.val</code></pre>
 <pre class="r"><code># Ist der P-Wert &gt; Signifikanzniveau, dann gibt es keine starke Evidenz gegen H0
 p.val &gt; alpha </code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>Schlussfolgerung : es gibt keine starke Evidenz gegen H<span class="math inline">\(_{0}\)</span></p>
+<p>Schlussfolgerung : es gibt keine starke Evidenz gegen H<span class="math inline">\(_{0}\)</span>. H<span class="math inline">\(_{0}\)</span> wird behalten.</p>
 </div>
-<div id="todo" class="section level1">
-<h1>TODO</h1>
-<div id="aufgabe-linksseitiger-test-des-populationsanteils-p" class="section level2">
-<h2>Aufgabe: Linksseitiger Test des Populationsanteils p</h2>
+<div id="aufgabe-linksseitiger-test-des-populationsanteils-p" class="section level1">
+<h1>Aufgabe: Linksseitiger Test des Populationsanteils p</h1>
 <ul>
-<li><p>Aufgabe: Die Datei „grocerystore.csv“ enthält eine Zufallsstichprobe von Kunden einer Metzgerei. Neben dem Geschlecht der Kunden wurde auch deren Verweilzeit im Laden notiert. Importieren Sie die Datei mit dem Befehl read.csv. Lässt sich aufgrund dieser Stichprobe die Behauptung, dass die Metzgerei mehrheitlich von Frauen besucht wird, bei einem Signifikanzniveau von &lt;&lt;&lt;&lt;5% verwerfen?</p></li>
+<li><p>Aufgabe: Die Datei „grocerystore.csv“ enthält eine Zufallsstichprobe von Kunden einer Metzgerei. Neben dem Geschlecht der Kunden wurde auch deren Verweilzeit im Laden notiert. Importieren Sie die Datei mit dem Befehl read.csv. Lässt sich aufgrund dieser Stichprobe die Behauptung, dass die Metzgerei mehrheitlich von Frauen besucht wird, bei einem Signifikanzniveau von &lt;5% verwerfen?</p></li>
 <li><p>Hypothesen:</p>
 <ul>
 <li><p>h0 : Anteil Frauen &gt; 0.5</p></li>
 <li><p>ha : Anteil Frauen &lt;= 0.5</p></li>
 </ul></li>
+<li><p>Daten einlesen, Prüfung der Struktur</p></li>
 </ul>
 <pre class="r"><code>grocery &lt;- read.csv(file=&quot;grocerystore.csv&quot;, header = T, sep=&quot;;&quot; )
+str(grocery)</code></pre>
+<pre><code>## 'data.frame':    16 obs. of  2 variables:
+##  $ gender          : Factor w/ 2 levels &quot;F&quot;,&quot;M&quot;: 1 1 2 1 1 1 1 1 2 1 ...
+##  $ shopping_minutes: num  28.5 11.6 23.8 22 36.5 ...</code></pre>
+<ul>
+<li>Prüfung von H<span class="math inline">\(_{0}\)</span> über Berechnung des Test-Wertes:</li>
+</ul>
+<pre class="r"><code>n &lt;- nrow(grocery)
+anz.frauen &lt;- nrow(grocery[grocery$gender == &quot;F&quot;, ])
 
-n &lt;- nrow(grocery)
-n.frauen &lt;- nrow(grocery[grocery$gender == &quot;F&quot;, ])
+alpha &lt;- 0.05
+p &lt;- anz.frauen / n
+p0 &lt;- 0.5
 
-test &lt;- prop.test(n.frauen, n, alternative = &quot;less&quot;, correct = FALSE)
+z.val &lt;- (p - p0) / sqrt(p0 * (1-p0) / n)
 
-result &lt;- test$p.value &lt; alpha</code></pre>
-<p>P-Wert &gt; Signifikankzniveau : FALSE . H0 wird nicht verworfen</p>
-</div>
+z.alpha &lt;- qnorm(alpha)
+
+#h0 wird verworfen, wenn z &lt; z.alpha
+z.val &lt; z.alpha</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>Schlussfolgerung : H<span class="math inline">\(_{0}\)</span> wird behalten, weil der Testwert kleiner als der kritischen Wert ist.</p>
+<ul>
+<li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes gegen Signifikanzniveau:</li>
+</ul>
+<pre class="r"><code># Berechnung des P-wertes:
+p.val &lt;- pnorm(z.val)
+
+# h0 wird verworfen wenn p.val &lt; alpha
+p.val &lt; alpha</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>H<span class="math inline">\(_{0}\)</span> wird nicht verworfen, weil P-Wert &gt; Signifikankzniveau.</p>
 </div>
 <div id="aufgabe-rechtsseitiger-test-des-populationsanteils-p" class="section level1">
 <h1>Aufgabe: Rechtsseitiger Test des Populationsanteils p</h1>
@@ -439,17 +461,17 @@ z.alpha &lt;- qnorm(1-alpha)
 # h0 wird verworfen wenn z.val &lt; z.alpha
 z.val &lt; z.alpha</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<p>H<span class="math inline">\(_{0}\)</span> wird verworfen, da der Test-Wert kleiner als der kritischen Wert ist.</p>
+<p>Schlussfolgerung : H<span class="math inline">\(_{0}\)</span> wird verworfen, da der Test-Wert kleiner als der kritischen Wert ist.</p>
 <ul>
 <li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes gegen Signifikanzniveau:</li>
 </ul>
-<pre class="r"><code># Prüfung über p-wert:
+<pre class="r"><code># Berechnung des P-wertes:
 p.val &lt;- pnorm(z.val, lower.tail = F)
 
 # h0 wird verworfen wenn p.val &lt; alpha
 p.val &lt; alpha</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>H<span class="math inline">\(_{0}\)</span> wird verworfen, weil der P-Wert kleiner als der Signifikanzniveau ist.</p>
+<p>Schlussfolgerung: H<span class="math inline">\(_{0}\)</span> wird verworfen, weil der P-Wert kleiner als der Signifikanzniveau ist.</p>
 <pre><code>## Warning: package 'MASS' was built under R version 3.4.4</code></pre>
 </div>
 <div id="aufgabe-zweiseitiger-test-des-populationsanteils-p" class="section level1">
@@ -476,7 +498,7 @@ c(-z.alpha,z.alpha)</code></pre>
 <pre class="r"><code># h0 wird verworfen wenn z.value nicht im intervall [-z.alpha, z.alpha]
 z.value &lt; z.alpha &amp;&amp; z.value &gt; -z.alpha</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>H<span class="math inline">\(_{0}\)</span> wird behalten.</p>
+<p>Schlussfolgerung : H<span class="math inline">\(_{0}\)</span> wird behalten, weil der Testwert liegt im Bereich zwischen die kritischen Werten.</p>
 <ul>
 <li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes gegen Signifikanzniveau:</li>
 </ul>
@@ -486,7 +508,7 @@ p.val &lt;- 2*pnorm(z.value, lower=F)
 # h0 wird behalten , wenn p-value &gt; alpha
 p.val &gt; alpha</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>H<span class="math inline">\(_{0}\)</span> wird behalten.</p>
+<p>Schlussfolgerung: H<span class="math inline">\(_{0}\)</span> wird behalten.</p>
 <p>Im oberen Teil habe ich die <na> Werte nicht aus der Stichprobe ausgeschlossen. Wie wäre es, wenn wir die <na> werte auschliessen würden?</p>
 <ul>
 <li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Berechung des Test-Wertes (Z-Wert)</li>
@@ -500,7 +522,7 @@ z2.value &lt;- (p2 - p0) / sqrt( p0 * (1 - p0) / tot)
 # h0 wird verworfen wenn z.value nicht im intervall [-z.alpha, z.alpha]
 z2.value &lt; z.alpha &amp;&amp; z2.value &gt; -z.alpha</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>H<span class="math inline">\(_{0}\)</span> wird behalten.</p>
+<p>Schlussfolgerung : H<span class="math inline">\(_{0}\)</span> wird behalten.</p>
 <ul>
 <li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes gegen Signifikanzniveau:</li>
 </ul>
@@ -508,7 +530,7 @@ z2.value &lt; z.alpha &amp;&amp; z2.value &gt; -z.alpha</code></pre>
 
 p2.val &gt; alpha</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>H<span class="math inline">\(_{0}\)</span> wird behalten.</p>
+<p>Schlussfolgerung : H<span class="math inline">\(_{0}\)</span> wird behalten.</p>
 </div>
 
 
