@@ -136,7 +136,7 @@ $(document).ready(function () {
 <li><p>Hypothese:</p>
 <p>H<span class="math inline">\(_{0}\)</span> : <span class="math inline">\(\mu\)</span> &gt;= 10’000 Stunden</p>
 <p>H<span class="math inline">\(_{a}\)</span> : <span class="math inline">\(\mu\)</span> &lt; 10’000 Stunden</p></li>
-<li><p>Evaluation von H<span class="math inline">\(_{0}\)</span> durch Berechung der Test-Wert (Z-Wert)</p></li>
+<li><p>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Berechung der Test-Wert (Z-Wert)</p></li>
 </ul>
 <pre class="r"><code>lightbulbs &lt;- scan(file = &quot;lightbulbs.txt&quot;)
 sigma &lt;- 120 # Standardabweichung der Population
@@ -179,7 +179,7 @@ p.value &gt; alpha </code></pre>
 <li><p>H<span class="math inline">\(_{0}\)</span> : <span class="math inline">\(\mu\)</span> &lt;= 2 g</p></li>
 <li><p>H<span class="math inline">\(_{a}\)</span> : <span class="math inline">\(\mu\)</span> &gt; 2 g</p></li>
 </ul></li>
-<li><p>Evaluation von H<span class="math inline">\(_{0}\)</span> durch Berechung der Test-Wert (Z-Wert)</p></li>
+<li><p>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Berechung der Test-Wert (Z-Wert)</p></li>
 </ul>
 <pre class="r"><code>cookies &lt;- scan(file = &quot;cookies.txt&quot;)
 xbar &lt;-  mean(cookies) # Stichproben Mittlewert
@@ -202,7 +202,7 @@ z.value &gt; z.alpha</code></pre>
 <p>Kritischer Wert : 1.2816</p>
 <p>Test-Wert ist kleiner als kritischer Wert. Schlussfolgerung: wir haben keine starke Evidenz gegen H<span class="math inline">\(_{0}\)</span>. H<span class="math inline">\(_{0}\)</span> wird nicht verworfen.</p>
 <ul>
-<li>Überprüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes und der Signifikanzniveau:</li>
+<li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes gegen Signifikanzniveau:</li>
 </ul>
 <pre class="r"><code>p.value &lt;- pnorm(z.value, lower.tail=FALSE) # p-Wert
 p.value</code></pre>
@@ -221,7 +221,7 @@ p.value &gt; alpha </code></pre>
 <li><p>h0 : mu = 15.4</p></li>
 <li><p>ha : mu != 15.4</p></li>
 </ul></li>
-<li><p>Evaluation von H<span class="math inline">\(_{0}\)</span> durch Berechung der Test-Wert (Z-Wert)</p></li>
+<li><p>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Berechung des Test-Wertes (Z-Wert)</p></li>
 </ul>
 <pre class="r"><code>penguins &lt;- scan( file = &quot;penguins.txt&quot;)
 xbar &lt;- mean(penguins) # Stichprobenmittelwert
@@ -246,7 +246,7 @@ z &lt; z.alpha.high &amp;&amp; z &gt; z.alpha.low</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Test-Wert liegt zwischen beiden kritischen Werte. Schlussfolgerung : H0 wird behalten</p>
 <ul>
-<li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes mit dem Signifikanzniveau :</li>
+<li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes gegen Signifikanzniveau:</li>
 </ul>
 <pre class="r"><code>p.value = 2 * pnorm(z)
 p.value</code></pre>
@@ -263,6 +263,7 @@ p.value &gt; alpha </code></pre>
 <li><p>Hypothesen:</p>
 <p>H<span class="math inline">\(_{0}\)</span> : <span class="math inline">\(\mu\)</span> &gt;= 10000</p>
 <p>H<span class="math inline">\(_{a}\)</span> : <span class="math inline">\(\mu\)</span> &lt; 10000</p></li>
+<li><p>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Berechung des Test-Wertes (Z-Wert)</p></li>
 </ul>
 <pre class="r"><code>lightbulbs &lt;- scan(file = &quot;lightbulbs.txt&quot;)
 
@@ -284,7 +285,9 @@ t.alpha # kritischer Wert</code></pre>
 t &gt; t.alpha </code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>Schlussfolgerung : H<span class="math inline">\(_{0}\)</span> wird verworfen</p>
-<p>Hypothese Prüfung mit Vergleich der P-Wert gegen Signifikanzniveau:</p>
+<ul>
+<li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes gegen Signifikanzniveau:</li>
+</ul>
 <pre class="r"><code>p.val &lt;- pt(t, df=n-1) # P-Wert
 p.val</code></pre>
 <pre><code>## [1] 1.591783e-05</code></pre>
@@ -300,6 +303,7 @@ p.val &gt; alpha </code></pre>
 <li><p>Hypothesen:</p>
 <p>H<span class="math inline">\(_{0}\)</span> : <span class="math inline">\(\mu\)</span> &lt;= 2</p>
 <p>H<span class="math inline">\(_{a}\)</span> : <span class="math inline">\(\mu\)</span> &gt; 2</p></li>
+<li><p>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Berechung des Test-Wertes (T-Wert)</p></li>
 </ul>
 <pre class="r"><code>cookies &lt;- scan(file = &quot;cookies.txt&quot;)
 
@@ -321,14 +325,16 @@ t.alpha # kritischer Wert</code></pre>
 t &gt; t.alpha </code></pre>
 <pre><code>## [1] FALSE</code></pre>
 <p>Schlussfolgerung : es gibt keine starke Evidenz gegen H0</p>
-<p>Hypothese Prüfung mit Vergleich der P-Wert gegen Signifikanzniveau:</p>
+<ul>
+<li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes gegen Signifikanzniveau:</li>
+</ul>
 <pre class="r"><code>p.val &lt;- pt(t, df=n-1) # P-Wert
 p.val</code></pre>
 <pre><code>## [1] 0.650302</code></pre>
 <pre class="r"><code># Ist der P-Wert &gt; Signifikanzniveau, dann gibt es keine starke Evidenz gegen H0
 p.val &gt; alpha </code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>Schlussfolgerung : es gibt keine starke Evidenz gegen H<span class="math inline">\(_{0}\)</span></p>
+<p>Schlussfolgerung : es gibt keine starke Evidenz gegen H<span class="math inline">\(_{0}\)</span>, H<span class="math inline">\(_{0}\)</span> wird behalten.</p>
 </div>
 <div id="aufgabe-zweiseitiger-test-bei-mu-sigma-unbekannt" class="section level1">
 <h1>Aufgabe: Zweiseitiger Test bei mu, sigma unbekannt</h1>
@@ -337,6 +343,7 @@ p.val &gt; alpha </code></pre>
 <li><p>Hypothesen:</p>
 <p>H<span class="math inline">\(_{0}\)</span> : mu = 15.4</p>
 <p>H<span class="math inline">\(_{a}\)</span> : mu != 15.4</p></li>
+<li><p>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Berechung des Test-Wertes (T-Wert)</p></li>
 </ul>
 <pre class="r"><code>penguins &lt;- scan(file = &quot;penguins.txt&quot;)
 
@@ -360,8 +367,10 @@ t.alpha.high</code></pre>
 <pre class="r"><code># Ist der Test-Wert zwischen beiden kritischen Werten, dann gibt es keine starke Evidenz gegen h0
 t &gt; t.alpha.low  &amp;&amp; t &lt; t.alpha.high</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>Schlussfolgerung : es gibt keine starke Evidenz gegen H0</p>
-<p>Hypothese Prüfung mit Vergleich der P-Wert gegen Signifikanzniveau:</p>
+<p>Schlussfolgerung : es gibt keine starke Evidenz gegen H<span class="math inline">\(_{0}\)</span>. H<span class="math inline">\(_{0}\)</span> wird behaltne.</p>
+<ul>
+<li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes gegen Signifikanzniveau:</li>
+</ul>
 <pre class="r"><code>p.val &lt;- pt(t, df=n-1)*2 # P-Wert
 p.val</code></pre>
 <pre><code>## [1] 0.1722724</code></pre>
@@ -401,9 +410,65 @@ result &lt;- test$p.value &lt; alpha</code></pre>
 </div>
 <div id="todo-2" class="section level1">
 <h1>TODO</h1>
+<pre><code>## Warning: package 'MASS' was built under R version 3.4.4</code></pre>
 </div>
 <div id="aufgabe-zweiseitiger-test-des-populationsanteils-p" class="section level1">
 <h1>Aufgabe: Zweiseitiger Test des Populationsanteils p</h1>
+<ul>
+<li><p>Aufgabe: Der Anteil der Rechtshänder unter den Studierenden von survey wird auf 90% geschätzt. Lässt sich diese Behauptung bei einem Signifikanzniveau von 1% verwerfen?</p></li>
+<li><p>Hypothesen:</p>
+<ul>
+<li><p>h0 : Anteil Rechtshänder = 0.9</p></li>
+<li><p>ha : Anteil Rechtshänder != 0.9</p></li>
+</ul></li>
+<li><p>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Berechung des Test-Wertes (Z-Wert)</p></li>
+</ul>
+<pre class="r"><code>alpha &lt;- 0.01
+n &lt;- nrow(survey)
+p0 &lt;- 0.9
+p &lt;- nrow (survey[survey$W.Hnd == &quot;Right&quot;,]) / n
+
+z.value &lt;- (p - p0) / sqrt( p0 * (1 - p0) / n)
+
+z.alpha &lt;- qnorm(1 - alpha / 2)
+c(-z.alpha,z.alpha)</code></pre>
+<pre><code>## [1] -2.575829  2.575829</code></pre>
+<pre class="r"><code># h0 wird verworfen wenn z.value nicht im intervall [-z.alpha, z.alpha]
+z.value &lt; z.alpha &amp;&amp; z.value &gt; -z.alpha</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>H<span class="math inline">\(_{0}\)</span> wird behalten.</p>
+<ul>
+<li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes gegen Signifikanzniveau:</li>
+</ul>
+<pre class="r"><code># bestimmung über den Vergleich der p-value mit der Signifikanzniveau:
+p.val &lt;- 2*pnorm(z.value, lower=F)
+
+# h0 wird behalten , wenn p-value &gt; alpha
+p.val &gt; alpha</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>H<span class="math inline">\(_{0}\)</span> wird behalten.</p>
+<p>Im oberen Teil habe ich die <na> Werte nicht aus der Stichprobe ausgeschlossen. Wie wäre es, wenn wir die <na> werte auschliessen würden?</p>
+<ul>
+<li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Berechung des Test-Wertes (Z-Wert)</li>
+</ul>
+<pre class="r"><code>right &lt;- survey[survey$W.Hnd == &quot;Right&quot;,]
+left &lt;- survey[survey$W.Hnd == &quot;Left&quot;,]
+tot &lt;- nrow(right) + nrow(left)
+
+p2 &lt;- nrow (right) / tot
+z2.value &lt;- (p2 - p0) / sqrt( p0 * (1 - p0) / tot)
+# h0 wird verworfen wenn z.value nicht im intervall [-z.alpha, z.alpha]
+z2.value &lt; z.alpha &amp;&amp; z2.value &gt; -z.alpha</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>H<span class="math inline">\(_{0}\)</span> wird behalten.</p>
+<ul>
+<li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes gegen Signifikanzniveau:</li>
+</ul>
+<pre class="r"><code>p2.val &lt;- 2*pnorm(z2.value, lower=F)
+
+p2.val &gt; alpha</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>H<span class="math inline">\(_{0}\)</span> wird behalten.</p>
 </div>
 
 

@@ -304,3 +304,68 @@ p.val > alpha # when true: we have no evidence against h0
 
 
 
+
+#============================================
+# Aufgabe: Linksseitiger Test des Populationsanteils p
+# Aufgabe: Die Datei „grocerystore.csv“ enthält eine Zufallsstichprobe
+# von Kunden einer Metzgerei. Neben dem Geschlecht der Kunden
+# wurde auch deren Verweilzeit im Laden notiert. Importieren Sie die
+# Datei mit dem Befehl read.csv.
+# Lässt sich aufgrund dieser Stichprobe die Behauptung, dass die
+# Metzgerei mehrheitlich von Frauen besucht wird, bei einem
+# Signifikanzniveau von 5% verwerfen?
+grocery <- read.csv(file="./uebungserie-9/grocerystore.csv", header = T, sep=";" )
+head(grocery)
+dim(grocery)
+str(grocery)
+
+n <- nrow(grocery)
+alpha <- 0.05
+pbar <- mean(grocery$shopping_minutes)
+p0 <- 0.5
+
+
+#============================================
+#Aufgabe: Die Apfelernte im letzten Jahr enthielt 12% faule Äpfel. Im
+#aktuellen Jahr zeigte eine Zufallsstichprobe 30 verfaulte Äpfel auf
+#insgesamt 214 Äpfeln. Lässt sich die Hypothese, dass in diesem Jahr
+#der Anteil verfaulter Äpfel weniger als 12% beträgt, bei einem
+#Signifikanzniveau von 5% verwerfen?
+
+
+#============================================
+#Aufgabe: Zweiseitiger Test des Populationsanteils p
+#Aufgabe: Der Anteil der Rechtshänder unter den Studierenden von
+#survey wird auf 90% geschätzt. Lässt sich diese Behauptung bei
+#einem Signifikanzniveau von 1% verwerfen?
+survey
+
+nrow(survey)
+nrow (survey[survey$W.Hnd == "Right",])
+nrow (survey[survey$W.Hnd != "Right",])
+survey[survey$W.Hnd != "Right",]$W.Hnd
+
+
+# h0 : p = 0.9
+# ha : p != 0.9
+alpha <- 0.01
+n <- nrow(survey)
+p0 <- 0.9
+p <- nrow (survey[survey$W.Hnd == "Right",]) / n
+
+z.value <- (p - p0) / sqrt( p0 * (1 - p0) / n)
+
+z.alpha <- qnorm(1 - alpha / 2)
+c(-z.alpha,z.alpha)
+
+# h0 wird verworfen wenn z.value nicht im intervall [-z.alpha, z.alpha]
+z.value < z.alpha && z.value > -z.alpha
+# h0 wird verworfen
+
+# bestimmung über den Vergleich der p-value mit der Signifikanzniveau:
+p.val <- 2*pnorm(z.value, lower=F)
+
+# h0 wird behalten , wenn p-value > alpha
+p.val > alpha
+# h0 wird behalten 
+
