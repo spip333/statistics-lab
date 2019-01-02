@@ -326,11 +326,24 @@ p0 <- 0.5
 
 
 #============================================
-#Aufgabe: Die Apfelernte im letzten Jahr enthielt 12% faule Äpfel. Im
-#aktuellen Jahr zeigte eine Zufallsstichprobe 30 verfaulte Äpfel auf
-#insgesamt 214 Äpfeln. Lässt sich die Hypothese, dass in diesem Jahr
-#der Anteil verfaulter Äpfel weniger als 12% beträgt, bei einem
-#Signifikanzniveau von 5% verwerfen?
+# Aufgabe: Rechtsseitiger Test des Populationsanteils p
+# Aufgabe: Um nicht in Schwierigkeiten zu geraten, darf der Anteil
+# geplatzter Kredite einer Bank den Anteil von 12% nicht überschreiten.
+# Die Datei „creditcards.csv“ enthält die Ergebnisse einer Untersuchung
+# unter 1000 Kunden der Bank. Importieren Sie die Datei mit dem Befehl
+# read.csv.
+# Kann die Bank, bei einem Signifikanzniveau von 5%, aufgrund dieser
+# Stichprobe sicher sein, dass die geplatzten Kredite den Anteil von 12%
+# nicht übersteigen?
+cc <- read.csv(file="./uebungserie-9/creditcards.csv", header = T, sep=";" )
+
+# h0 : p <= 0.12
+# ha : p > 0.12
+p0 <- 0.12
+
+
+
+
 
 
 #============================================
@@ -360,7 +373,7 @@ c(-z.alpha,z.alpha)
 
 # h0 wird verworfen wenn z.value nicht im intervall [-z.alpha, z.alpha]
 z.value < z.alpha && z.value > -z.alpha
-# h0 wird verworfen
+# h0 wird  behalten 
 
 # bestimmung über den Vergleich der p-value mit der Signifikanzniveau:
 p.val <- 2*pnorm(z.value, lower=F)
@@ -368,4 +381,20 @@ p.val <- 2*pnorm(z.value, lower=F)
 # h0 wird behalten , wenn p-value > alpha
 p.val > alpha
 # h0 wird behalten 
+
+# wie wäre es, wenn wir die <na> werte schlicht wegschmeisssen würden?
+
+right <- survey[survey$W.Hnd == "Right",]
+left <- survey[survey$W.Hnd == "Left",]
+tot <- nrow(right) + nrow(left)
+
+p2 <- nrow (right) / tot
+z2.value <- (p2 - p0) / sqrt( p0 * (1 - p0) / tot)
+# h0 wird verworfen wenn z.value nicht im intervall [-z.alpha, z.alpha]
+z2.value < z.alpha && z2.value > -z.alpha
+# h0 wird  behalten 
+
+p2.val <- 2*pnorm(z2.value, lower=F)
+
+p2.val > alpha
 

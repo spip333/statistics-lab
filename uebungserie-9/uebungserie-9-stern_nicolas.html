@@ -402,14 +402,54 @@ result &lt;- test$p.value &lt; alpha</code></pre>
 <p>P-Wert &gt; Signifikankzniveau : FALSE . H0 wird nicht verworfen</p>
 </div>
 </div>
-<div id="todo-1" class="section level1">
-<h1>TODO</h1>
-</div>
 <div id="aufgabe-rechtsseitiger-test-des-populationsanteils-p" class="section level1">
 <h1>Aufgabe: Rechtsseitiger Test des Populationsanteils p</h1>
-</div>
-<div id="todo-2" class="section level1">
-<h1>TODO</h1>
+<ul>
+<li><p>Aufgabe: Um nicht in Schwierigkeiten zu geraten, darf der Anteil geplatzter Kredite einer Bank den Anteil von 12% nicht überschreiten. Die Datei „creditcards.csv“ enthält die Ergebnisse einer Untersuchung unter 1000 Kunden der Bank. Importieren Sie die Datei mit dem Befehl read.csv. Kann die Bank, bei einem Signifikanzniveau von 5%, aufgrund dieser Stichprobe sicher sein, dass die geplatzten Kredite den Anteil von 12% nicht übersteigen?</p></li>
+<li><p>Hypothesen:</p>
+<ul>
+<li><p>h0 : Anteil geplatzten Kredite &lt;= 0.12</p></li>
+<li><p>ha : Anteil geplatzten Kredite &gt; 0.12</p></li>
+</ul></li>
+<li><p>Daten einlesen, Struktur prüfen:</p></li>
+</ul>
+<pre class="r"><code>cc &lt;- read.csv(file=&quot;creditcards.csv&quot;, header = T, sep=&quot;;&quot; )
+# Prüfe Datenstruktur
+str(cc)</code></pre>
+<pre><code>## 'data.frame':    1000 obs. of  1 variable:
+##  $ bounced: Factor w/ 2 levels &quot;No&quot;,&quot;Yes&quot;: 1 1 1 1 1 1 1 1 1 2 ...</code></pre>
+<pre class="r"><code># Prüfe, dass der Wertebereich nur &quot;Ja&quot; oder &quot;Nein&quot; enthält:
+length(cc$bounced) == length(cc[cc$bounced == &quot;Yes&quot;,]) + length(cc[cc$bounced == &quot;No&quot;,])</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<ul>
+<li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Berechung des Test-Wertes (Z-Wert)</li>
+</ul>
+<pre class="r"><code>alpha &lt;- 0.05 
+n &lt;- length(cc$bounced)
+p0 &lt;- 0.12
+anz.kredit.ueber &lt;- length(cc[cc$bounced == &quot;Yes&quot;,])
+p &lt;- anz.kredit.ueber / n 
+
+# Berechnung des Test-Wertes
+z.val &lt;- (p - p0) / sqrt(p0 * (1 - p0) / n)
+
+# Kritischer Wert
+z.alpha &lt;- qnorm(1-alpha)
+
+# h0 wird verworfen wenn z.val &lt; z.alpha
+z.val &lt; z.alpha</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>H<span class="math inline">\(_{0}\)</span> wird verworfen, da der Test-Wert kleiner als der kritischen Wert ist.</p>
+<ul>
+<li>Prüfung von H<span class="math inline">\(_{0}\)</span> durch Vergleich des P-Wertes gegen Signifikanzniveau:</li>
+</ul>
+<pre class="r"><code># Prüfung über p-wert:
+p.val &lt;- pnorm(z.val, lower.tail = F)
+
+# h0 wird verworfen wenn p.val &lt; alpha
+p.val &lt; alpha</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>H<span class="math inline">\(_{0}\)</span> wird verworfen, weil der P-Wert kleiner als der Signifikanzniveau ist.</p>
 <pre><code>## Warning: package 'MASS' was built under R version 3.4.4</code></pre>
 </div>
 <div id="aufgabe-zweiseitiger-test-des-populationsanteils-p" class="section level1">
