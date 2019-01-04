@@ -336,9 +336,9 @@ Schlussfolgerung : es gibt keine starke Evidenz gegen H$_{0}$. H$_{0}$ wird beha
 
 - Hypothesen: 
 
-    - h0 : Anteil Frauen > 0.5
+    - h0 : Anteil Frauen >= 0.5
 
-    - ha : Anteil Frauen <= 0.5
+    - ha : Anteil Frauen < 0.5
 
 - Daten einlesen, Prüfung der Struktur
 ```{r}
