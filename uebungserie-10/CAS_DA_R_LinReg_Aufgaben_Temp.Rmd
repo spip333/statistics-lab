@@ -1,0 +1,83 @@
+---
+title:      "Aufgabenserie 10: Lineare Regression"
+author:     "Nicolas Stern"
+date:       "25.01.2019" #due date
+output:
+  html_document:
+    toc: true
+    number_sections: true
+    toc_depth: 1
+    toc_float: 
+      collapsed: false
+      smooth_scroll: false
+    
+---
+***
+
+# Schätzen eines $y$-Wertes
+Betrachten Sie den Datensatz $\textbf{mtcars}$. Modellieren Sie das Gewicht $\texttt{wt}$ der Autos als Funktion der Motorleistung $\texttt{hp}$.
+
+Welches durchschnittliche Gewicht wird für ein Auto geschätzt, dessen Motor eine Leistung von $200$ PS aufweist?
+
+*Lösungsweg:*
+
+```{r}
+ #Fügen Sie hier Ihren Lösungsweg als R-Code ein
+```
+
+*Interpretation:*<br />
+<mark>Interpretieren Sie hier gegebenfalls Ihr Ergebnis.</mark>
+
+***
+
+# Bestimmtheitsmass
+
+Bestimmen Sie das Bestimmtheitsmass $r^2$ des linearen Modells zu $\textbf{mtcars}$.
+
+*Lösungsweg:*
+
+```{r}
+# Ihr R-Code
+
+```
+
+***
+
+# Signifikanztest für $\beta_1$
+
+Untersuchen Sie, ob zwischen den Grössen $\texttt{wt}$ und $\texttt{hp}$ aus $\textbf{mtcars}$ ein signifikanter Zusammenhang besteht.
+
+
+*Lösungsweg:*
+
+```{r}
+# Ihr R-Code
+```
+
+***
+
+# Konfidenzintervalle für $y$
+
+Bestimmen Sie ein $95\%$-Konfidenzintervall für das durchschnittliche Gewicht bei einer Motorenleistung von 200 PS.
+
+*Lösungsweg:*
+
+```{r}
+# Ihr Code 
+
+```
+
+***
+
+# Normalverteilte Residuen
+
+Betrachten Sie das lineare Modell, welches das Gewicht eines Autos als Funktions des Motorenleistung modelliert. Erstellen Sie ein Normal-Wahrscheinlichkeits-Diagramm und testen Sie, ob die Residuen normalverteilt sind.
+
+*Lösungsweg:* 
+
+```{r}
+# Ihr Code
+
+```
+
+***
