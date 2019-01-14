@@ -22,28 +22,46 @@ Welches durchschnittliche Gewicht wird für ein Auto geschätzt, dessen Motor ei
 *Lösungsweg:*
 
 ```{r}
-# zuerst daten plotten und betrachten, ob eine lin. reg sinnvoll ist
-plot(x = mtcars$hp, y=mtcars$wt)
+# Daten zuerst plotten und betrachten. Prüfen, ob eine lineare Regression sinnvoll aussieht.
+plot(x = mtcars$hp, 
+     y=mtcars$wt,
+     main = "Gewicht als Funktion des Motorkrafts",
+     xlab = "ps",
+     ylab = "Gewicht (in lbs * 1000)")
 
+# Versuch, eine passende lineare Regression zu modellieren:
 # model populieren
 wt.hp.model <- lm (wt~hp, data=mtcars)
 
-# coeffs extrahieren für spätere Berechnungen
+# coeffs extrahieren: 
 coeffs <- coefficients(wt.hp.model)
+steigung <- coeffs[2]
+intercept <- coeffs[1]
 
-# Geschätzter Gewicht für ein Auto mit 200hp:
-est.wt1 <- coeffs[1]+ 200 * coeffs[2] 
+# Daten und Linie des Modells zusammen plotten
+x <- mtcars$hp
+y <- mtcars$wt
+
+plot(x = mtcars$hp, 
+     y=mtcars$wt,
+     main = "Gewicht als Funktion des Motorkrafts (2. Grafik)",
+     xlab = "ps",
+     ylab = "Gewicht (in lbs * 1000)")lines(x, intercept + x*steigung)
+
+# Berechung des erwarteten Gewichtes für ein Auto mit 200hp:
+hp1  <- 200
+est.wt1 <- intercept + steigung * hp1
 est.wt1
 
-# alternativ mit predict
-new <- data.frame(hp=200)
-est.wt2 <- predict(wt.hp.model,new)
+# Dieselbe Berechnung mit der R-Funktion predict:
+hp2 <- data.frame(hp=200)
+est.wt2 <- predict(wt.hp.model, hp2)
 est.wt2
 
 ```
 
 *Interpretation:*<br />
-<mark>Interpretieren Sie hier gegebenfalls Ihr Ergebnis.</mark>
+Zu beobachten ist eine statistische positive Korrelation zwischen Motorkraft und Gewicht der PWs aus mtcars. Die Korrelation ist deutlich, weist aber eine deutliche Streuung. Aus der Korrelation darf man schliessen, dass je stärker ein Motor ist, umso schwerer erwartet man das Fahrzeug.
 
 ***
 
