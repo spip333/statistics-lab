@@ -22,7 +22,24 @@ Welches durchschnittliche Gewicht wird für ein Auto geschätzt, dessen Motor ei
 *Lösungsweg:*
 
 ```{r}
- #Fügen Sie hier Ihren Lösungsweg als R-Code ein
+# zuerst daten plotten und betrachten, ob eine lin. reg sinnvoll ist
+plot(x = mtcars$hp, y=mtcars$wt)
+
+# model populieren
+wt.hp.model <- lm (wt~hp, data=mtcars)
+
+# coeffs extrahieren für spätere Berechnungen
+coeffs <- coefficients(wt.hp.model)
+
+# Geschätzter Gewicht für ein Auto mit 200hp:
+est.wt1 <- coeffs[1]+ 200 * coeffs[2] 
+est.wt1
+
+# alternativ mit predict
+new <- data.frame(hp=200)
+est.wt2 <- predict(wt.hp.model,new)
+est.wt2
+
 ```
 
 *Interpretation:*<br />
