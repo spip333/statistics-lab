@@ -46,7 +46,8 @@ plot(x = mtcars$hp,
      y=mtcars$wt,
      main = "Gewicht als Funktion des Motorkrafts (2. Grafik)",
      xlab = "ps",
-     ylab = "Gewicht (in lbs * 1000)")lines(x, intercept + x*steigung)
+     ylab = "Gewicht (in lbs * 1000)")
+lines(x, intercept + x*steigung)
 
 # Berechung des erwarteten Gewichtes für ein Auto mit 200hp:
 hp1  <- 200
@@ -72,11 +73,9 @@ Bestimmen Sie das Bestimmtheitsmass $r^2$ des linearen Modells zu $\textbf{mtcar
 *Lösungsweg:*
 
 ```{r}
-# Ihr R-Code
-
+r2 <- summary(wt.hp.model)$r.squared
 ```
-
-***
+Bestimmtheitsmass für das lineare Modell aus mtcars :  `r round (r2, 4)`
 
 # Signifikanztest für $\beta_1$
 

@@ -11,6 +11,7 @@ x <- mtcars$hp
 plot(x, y)
 
 
+
 # model wt as function der hp
 wt.hp.model <- lm (wt~hp, data=mtcars)
 wt.hp.model$coefficients
@@ -22,6 +23,17 @@ coeffs <- coefficients(wt.hp.model)
 coeffs
 est.wt <- coeffs[1]+ 200 * coeffs[2] 
 est.wt
+
+max(mtcars$hp)
+
+?mtcars  
+  
+plot(x, y)
+lines(x2, coeffs[1] + x2*coeffs[2])
+  
+?plot
+
+
 # gewicht bei 200hp:
 coeffs[1]+ 200 * coeffs[2] 
 
@@ -41,4 +53,9 @@ head(mtcars)
 
 model$fitted.values
 
+summary(wt.hp.model)$r.squared
+
+# Bestimmtheitsmass
+eruption.lm <- lm(eruptions ~ waiting, data=faithful)
+summary(eruption.lm)
 
