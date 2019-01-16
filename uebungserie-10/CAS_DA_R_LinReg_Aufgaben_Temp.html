@@ -291,14 +291,37 @@ est.wt2</code></pre>
 <h1><span class="header-section-number">3</span> Signifikanztest für <span class="math inline">\(\beta_1\)</span></h1>
 <p>Untersuchen Sie, ob zwischen den Grössen <span class="math inline">\(\texttt{wt}\)</span> und <span class="math inline">\(\texttt{hp}\)</span> aus <span class="math inline">\(\textbf{mtcars}\)</span> ein signifikanter Zusammenhang besteht.</p>
 <p><em>Lösungsweg:</em></p>
-<pre class="r"><code># Ihr R-Code</code></pre>
+<p>H<span class="math inline">\(_0\)</span> : <span class="math inline">\(\beta_1\)</span> = 0 : Es besteht kein lineares Zusammenhang zwischen x und y</p>
+<p>H<span class="math inline">\(_a\)</span> : <span class="math inline">\(\beta_1\)</span> != 0 : Es besteht ein signifikantes Zusammenhang zwischen x und y</p>
+<p>Wenn der p-Wert nahe von 0 ist, besteht kein linearer Zusammenhang zwischen x und y.</p>
+<pre class="r"><code>summary(wt.hp.model)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = wt ~ hp, data = mtcars)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.41757 -0.53122 -0.02038  0.42536  1.56455 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 1.838247   0.316520   5.808 2.39e-06 ***
+## hp          0.009401   0.001960   4.796 4.15e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.7483 on 30 degrees of freedom
+## Multiple R-squared:  0.4339, Adjusted R-squared:  0.4151 
+## F-statistic:    23 on 1 and 30 DF,  p-value: 4.146e-05</code></pre>
+<p>p-Wert = 4.146 * <span class="math inline">\(10^{-5}\)</span></p>
+<p>p-Wert ist sehr klein, so kann H<span class="math inline">\(_0\)</span> verworfen werden. Es besteht ein Zusammenhang zwischen x (Leistung) und y (Gewicht).</p>
 <hr />
 </div>
 <div id="konfidenzintervalle-fur-y" class="section level1">
 <h1><span class="header-section-number">4</span> Konfidenzintervalle für <span class="math inline">\(y\)</span></h1>
 <p>Bestimmen Sie ein <span class="math inline">\(95\%\)</span>-Konfidenzintervall für das durchschnittliche Gewicht bei einer Motorenleistung von 200 PS.</p>
 <p><em>Lösungsweg:</em></p>
-<pre class="r"><code># Ihr Code </code></pre>
+<pre class="r"><code># r- code</code></pre>
 <hr />
 </div>
 <div id="normalverteilte-residuen" class="section level1">

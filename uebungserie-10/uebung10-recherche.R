@@ -59,3 +59,5 @@ summary(wt.hp.model)$r.squared
 eruption.lm <- lm(eruptions ~ waiting, data=faithful)
 summary(eruption.lm)
 
+# Signifikanztest
+summary(wt.hp.model)

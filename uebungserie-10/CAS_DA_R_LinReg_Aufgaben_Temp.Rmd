@@ -84,9 +84,19 @@ Untersuchen Sie, ob zwischen den Grössen $\texttt{wt}$ und $\texttt{hp}$ aus $\
 
 *Lösungsweg:*
 
+H$_0$ : $\beta_1$ = 0 : Es besteht kein lineares Zusammenhang zwischen x und y
+
+H$_a$ : $\beta_1$ != 0 : Es besteht ein signifikantes Zusammenhang zwischen x und y 
+
+Wenn der p-Wert nahe von 0 ist, besteht kein linearer Zusammenhang zwischen x und y.
+
 ```{r}
-# Ihr R-Code
+summary(wt.hp.model)
 ```
+p-Wert = 4.146 * $10^{-5}$ 
+
+p-Wert ist sehr klein, so kann H$_0$ verworfen werden. Es besteht ein Zusammenhang zwischen x (Leistung) und y (Gewicht).
+
 
 ***
 
@@ -97,8 +107,7 @@ Bestimmen Sie ein $95\%$-Konfidenzintervall für das durchschnittliche Gewicht b
 *Lösungsweg:*
 
 ```{r}
-# Ihr Code 
-
+# r- code
 ```
 
 ***
