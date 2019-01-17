@@ -61,3 +61,4 @@ summary(eruption.lm)
 
 # Signifikanztest
 summary(wt.hp.model)
+

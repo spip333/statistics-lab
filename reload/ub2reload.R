@@ -125,8 +125,8 @@ lines(breaks, waiting.cumrelfreq)
 # in der Stichprobe darstellt. Die Klassenbreiten sollen 3 Jahre betragen, das erste 
 # Intervall soll bei 15 Jahren beginnen und die rechte Intervallgrenze soll nicht zum 
 #Intervall gehören.
-data <- load("C:/ieu/workspace/R/descriptive-statistik/data/Daten_WachstumX.RData");
-
+data <- load("./reload/Daten_WachstumX.RData")
+head(Daten_Wachstum)
 head(Daten_Wachstum$Alter)
 
 low <- min(Daten_Wachstum$Alter)
