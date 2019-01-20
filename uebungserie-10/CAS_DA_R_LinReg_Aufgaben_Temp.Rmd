@@ -22,19 +22,25 @@ Welches durchschnittliche Gewicht wird für ein Auto geschätzt, dessen Motor ei
 *Lösungsweg:*
 
 ```{r}
-# Daten zuerst plotten und betrachten. Prüfen, ob eine lineare Regression sinnvoll aussieht.
+# Daten zuerst plotten (scatterplot und qqplot) und betrachten. Prüfen, ob eine lineare Regression sinnvoll aussieht.
+
+# scatterplot
 plot(x = mtcars$hp, 
      y=mtcars$wt,
      main = "Gewicht als Funktion des Motorkrafts",
      xlab = "ps",
      ylab = "Gewicht (in lbs * 1000)")
 
+# qqplot
+qqplot(x = mtcars$hp, y=mtcars$wt)
+
+
 # Versuch, eine passende lineare Regression zu modellieren:
 # model populieren
-wt.hp.model <- lm (wt~hp, data=mtcars)
+lm.wt <- lm (wt~hp, data=mtcars)
 
 # coeffs extrahieren: 
-coeffs <- coefficients(wt.hp.model)
+coeffs <- coefficients(lm.wt)
 steigung <- coeffs[2]
 intercept <- coeffs[1]
 
@@ -56,7 +62,7 @@ est.wt1
 
 # Dieselbe Berechnung mit der R-Funktion predict:
 hp2 <- data.frame(hp=200)
-est.wt2 <- predict(wt.hp.model, hp2)
+est.wt2 <- predict(lm.wt, hp2)
 est.wt2
 
 ```
@@ -73,7 +79,7 @@ Bestimmen Sie das Bestimmtheitsmass $r^2$ des linearen Modells zu $\textbf{mtcar
 *Lösungsweg:*
 
 ```{r}
-r2 <- summary(wt.hp.model)$r.squared
+r2 <- summary(lm.wt)$r.squared
 ```
 Bestimmtheitsmass für das lineare Modell aus mtcars :  `r round (r2, 4)`
 
@@ -91,7 +97,7 @@ H$_a$ : $\beta_1$ != 0 : Es besteht ein signifikantes Zusammenhang zwischen x un
 Wenn der p-Wert nahe von 0 ist, besteht kein linearer Zusammenhang zwischen x und y.
 
 ```{r}
-summary(wt.hp.model)
+summary(lm.wt)
 ```
 p-Wert = 4.146 * $10^{-5}$ 
 
@@ -107,8 +113,16 @@ Bestimmen Sie ein $95\%$-Konfidenzintervall für das durchschnittliche Gewicht b
 *Lösungsweg:*
 
 ```{r}
-# r- code
+se.steigung <- summary(lm.wt)$coefficients[,2][2]
+ME.steigung <- qnorm(0.975) * se.steigung
+konfidenz.intervall <- steigung + c(-ME.steigung,ME.steigung)
 ```
+
+95 % Konfidenzintervall für eine Leistung von 200 ps: 
+
+- untere Wert : `r round(intercept + steigung * 200 - ME.steigung, 4)`
+
+- obere Wert : `r round(intercept + steigung * 200 + ME.steigung, 4)`
 
 ***
 
@@ -119,8 +133,9 @@ Betrachten Sie das lineare Modell, welches das Gewicht eines Autos als Funktions
 *Lösungsweg:* 
 
 ```{r}
-# Ihr Code
-
+plot(lm.wt, which=2)
 ```
+
+Antwort: da die Residuen auf einer Gerade sind, darf man annehmen, sie seien normalverteilt.
 
 ***

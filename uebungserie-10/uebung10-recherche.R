@@ -60,5 +60,25 @@ eruption.lm <- lm(eruptions ~ waiting, data=faithful)
 summary(eruption.lm)
 
 # Signifikanztest
-summary(wt.hp.model)
+summary()
 
+## Normalverteilte Residuen
+# Betrachten Sie das lineare Modell, welches das Gewicht eines Autos als Funktions
+# des Motorenleistung modelliert. Erstellen Sie ein Normal-Wahrscheinlichkeits-Diagramm
+# und testen Sie, ob die Residuen normalverteilt sind.
+plot(wt.hp.model, which=2)
+
+
+x <- c(1,2,3,4,5,6,7,8,9,10)
+y <- (x * 3) + 2
+
+data <- as.data.frame(x, y)
+data$y <- y
+data
+plot(x2,y)
+
+plot(x2,y, type="line")
+
+mod <- lm(y~x, data=data)
+mod
+plot(mod, which=3)
