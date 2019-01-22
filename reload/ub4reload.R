@@ -63,7 +63,6 @@ sd(faithful$waiting)
 sqrt(var(faithful$waiting)*(length(faithful$waiting)-1)/length(faithful$waiting))
 
 
-
 ## Aufgabe: Korrelationskoefﬁzient
 # - Öffnen Sie den Datensatz swiss. Bestimmen Sie die Korrelation zwischen der 
 # Fruchtbarkeitsrate und dem Anteil derjenigen, deren Ausbildung über den 
